@@ -3,7 +3,11 @@ import { NavigationContainer ,DarkTheme as NavigationDarkTheme,DefaultTheme as N
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import TabNavigation from './TabNavigation/TabNavigation'
 import {DrawerContent} from '../Content/DrawerContent'
+import { createStackNavigator } from '@react-navigation/stack';
+import Icon from 'react-native-vector-icons/Ionicons'
 import {Provider as PaperProvider ,DarkTheme as PaperDarkTheme,DefaultTheme as PaperDefaultTheme} from 'react-native-paper'
+import QuizScreen from '../Screens/QuizScreen';
+const QuizStack=createStackNavigator()
 
 const Drawer = createDrawerNavigator();
 
@@ -41,6 +45,8 @@ export default function MainNavigation(){
     
       <Drawer.Navigator theme={theme} initialRouteName="Home" drawerContent={props => <DrawerContent toggleTheme={toggleTheme} { ...props}/> }>
         <Drawer.Screen name="HomeDrawer" component={TabNavigation} />
+        <Drawer.Screen name="Quiz" component={QuizStackScreen} 
+         />
         {/* <Drawer.Screen name="Detail" component={DetailStackScreen} /> */}
       </Drawer.Navigator>
       
@@ -48,3 +54,30 @@ export default function MainNavigation(){
     </PaperProvider>
   )
 }
+
+
+
+/////////////////Quiz Stack Screen///////////////////
+
+const QuizStackScreen = ({navigation}) =>{
+  return(
+    <QuizStack.Navigator
+    screenOptions={{
+      headerStyle:{
+        backgroundColor:'blue'
+      },
+      headerTintColor:'#fff',
+      headerTitleStyle:{
+        fontWeight:'bold'
+      }
+    }}>
+         <QuizStack.Screen name="Quiz" component={QuizScreen} options={{
+          headerLeft:() => {
+            return <Icon.Button  name='md-menu' size={25} backgroundColor='blue'  onPress={()=>navigation.openDrawer()}></Icon.Button>
+          },
+
+        }}  />
+   </QuizStack.Navigator> 
+  )
+      }
+

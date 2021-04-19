@@ -45,10 +45,12 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Ion from 'react-native-vector-icons/MaterialIcons'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const HomeStack = createStackNavigator();
 const ExamStack = createStackNavigator();
 // const ProfileStack=createStackNavigator();
 const LeaderBoardStack=createStackNavigator();
+
 
 const Tab = createMaterialBottomTabNavigator();
 export default function TabNavigation(){
@@ -193,4 +195,10 @@ const LeaderBoardStackScreen = ({navigation}) =>{
   )
       }
 
+
+
+    
+      
+      
+      
 

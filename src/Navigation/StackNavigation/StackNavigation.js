@@ -14,7 +14,7 @@ const StackNavigation = ({navigation}) => (
         {/* <RootStack.Screen name="SplashScreen" component={SplashScreen}/> */}
         <Stack.Screen name="LoginScreen" component={LoginScreen}/>
         <Stack.Screen name="RegisterScreen" component={RegisterScreen}/>
-        <Stack.Screen name='Home' component={mainNavigation}/>
+        <Stack.Screen name='HomeDrawer' component={mainNavigation}/>
     </Stack.Navigator>
     </NavigationContainer>
 );

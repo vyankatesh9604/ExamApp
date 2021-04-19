@@ -137,7 +137,7 @@ export default function LoginScreen({navigation}) {
                                 {/*--------------- sign In Button ---------------------------- */}
                     
 
-                                    <TouchableOpacity style={styles.signIn} onPress={()=>navigation.navigate('Home')}>
+                                    <TouchableOpacity style={styles.signIn} onPress={()=>navigation.navigate('HomeDrawer')}>
                                         <LinearGradient
                                             colors={['#08d4c4','#01ab9d']}
                                             style={styles.signIn}

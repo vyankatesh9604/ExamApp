@@ -80,8 +80,8 @@ export function DrawerContent(props) {
                             icon={({color,size})=>(
                                 <Icon name='account-check-outline' color={color} size={size}/>
                             )}
-                            label='Support'
-                            onPress={()=>{}}
+                            label='Quiz'
+                            onPress={()=>{props.navigation.navigate('Quiz')}}
                         />
                     </Drawer.Section>
                     {/* <Drawer.Section title='preferences'>
