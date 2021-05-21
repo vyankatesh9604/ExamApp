@@ -1,15 +1,19 @@
-import  React from 'react';
+import  React,{createContext,useReducer}from 'react';
 // import { View } from 'react-native';
 //  import MainNavigation from './src/Navigation/MainNavigation'
  import StackNavigation from './src/Navigation/StackNavigation/StackNavigation'
 // import Profile from './src/Screens/ProfileScreen'
+import {reducer,initialState} from './src/reducer/UserReducer'
 
-function App() {
+export const userContext=createContext()
 
+const App=()=> {
+  const [state,dispatch] = useReducer(reducer,initialState)
   return (
+    <userContext.Provider  value={{state,dispatch}}>
      <StackNavigation/>
-    //  <MainNavigation/>
-    // <Profile/>
+  
+    </userContext.Provider>
     );
 }
 export default App;
