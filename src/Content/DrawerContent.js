@@ -38,7 +38,7 @@ export function DrawerContent(props) {
                             />
                             <View style={{ marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>Vyankatesh G</Title>
-                                <Caption style={styles.caption}>@vyankatesh</Caption>
+                                <Caption style={styles.caption}  onPress={()=>{props.navigation.navigate('Profile')}}><Ion name='edit' style={{marginHorizontal:4}}/><Text style={{color:'blue',fontSize:14}} > Edit Pofile</Text></Caption>
                             </View>
                         </View>
                         <View style={styles.row}>
@@ -69,19 +69,19 @@ export function DrawerContent(props) {
                             label='LeaderBoard'
                             onPress={()=>{props.navigation.navigate('Leader')}}
                         />
-                         <DrawerItem
+                         {/* <DrawerItem
                             icon={({color,size})=>(
                                 <Icon name='account-outline' color={color} size={size}/>
                             )}
                             label='Profile'
                             onPress={()=>{props.navigation.navigate('Profile')}}
-                        />
+                        /> */}
                          <DrawerItem
                             icon={({color,size})=>(
                                 <Icon name='account-check-outline' color={color} size={size}/>
                             )}
-                            label='Quiz'
-                            onPress={()=>{props.navigation.navigate('Quiz')}}
+                            label='Assignment'
+                            onPress={()=>{props.navigation.navigate('Assign')}}
                         />
                     </Drawer.Section>
                     {/* <Drawer.Section title='preferences'>

@@ -14,6 +14,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Ion from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import axios from 'axios'
 
 
 export default function RegisterScreen({navigation}) {
@@ -23,6 +25,8 @@ export default function RegisterScreen({navigation}) {
         check_textInputChange:false,
         secureTextEntry:true
     })
+    const [name,setName]=React.useState()
+    const [collegename,setCollegeName]=React.useState()
     
     const textInputChnge =(val) =>{
         if(val.length !== 0){
@@ -53,6 +57,21 @@ export default function RegisterScreen({navigation}) {
         })
     }
 
+    const getRegister=({navigation})=>{
+        axios.post('http://192.168.43.247:5000/student/signup',{name:name,email:data.email,password:data.password,collegename:collegename})
+        .then((res) => {
+            if(res.data.status==="fail" ){
+                 		Alert.alert(res.data.message)
+                 	}else{
+                         Alert.alert("Register sucessfully")
+                 		navigation.navigate('LoginScreen')
+            	}
+            }).catch((err)=>{
+                	console.log(err)
+             })
+		
+    }
+
     return (
             <View style={styles.container}>
                 <StatusBar backgroundColor="#009387" barStyle="dark-content"/>
@@ -80,6 +99,7 @@ export default function RegisterScreen({navigation}) {
                                     placeholder="Your Full Name"
                                     style={styles.textInput}
                                     autoCapitalize="none"
+                                    onChangeText={(name)=>setName(name)}
             
                                 />
                             </View>
@@ -112,9 +132,7 @@ export default function RegisterScreen({navigation}) {
 
                     {/*--------------- Password Input ---------------------------- */}
 
-                                <Text style={styles.text_footer,{
-                                    marginTop:35
-                                }}>Password</Text>
+                                <Text style={styles.text_footer}>Password</Text>
                                 <View style={styles.action}>
                                     <Feather 
                                         name="lock"
@@ -145,13 +163,28 @@ export default function RegisterScreen({navigation}) {
 
 
 
-                    
+                            <Text style={styles.text_footer}> college Name</Text>
+                            <View style={styles.action}>
+                                <MaterialCommunityIcons
+                                    name="school"
+                                    color="#05375a"
+                                    size={20}
+                                />
+                                <TextInput 
+                                    placeholder="Your Full Name"
+                                    style={styles.textInput}
+                                    autoCapitalize="none"
+                                    onChangeText={(collegename)=>setName(collegename)}
+            
+                                />
+                            </View>
                     
                             <View style={styles.button}>
-                                {/*--------------- sign In Button ---------------------------- */}
+
+                                {/*--------------- sign Up Button ---------------------------- */}
                     
 
-                                    <TouchableOpacity style={styles.signIn}>
+                                    <TouchableOpacity style={styles.signIn} onPress={()=>getRegister({navigation})}>
                                         <LinearGradient
                                             colors={['#08d4c4','#01ab9d']}
                                             style={styles.signIn}
@@ -163,7 +196,7 @@ export default function RegisterScreen({navigation}) {
                                         </LinearGradient>
                                     </TouchableOpacity>
 
-                                {/*--------------- sign up  Button ---------------------------- */}
+                                {/*--------------- sign In  Button ---------------------------- */}
 
                                     <TouchableOpacity 
                                     onPress={()=>navigation.navigate('LoginScreen')}

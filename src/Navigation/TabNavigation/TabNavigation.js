@@ -61,11 +61,11 @@ export default function TabNavigation(){
       // barStyle={{ backgroundColor: 'tomato' }}
     >
       <Tab.Screen
-        name="Feed"
+        name="Home"
         component={HomeStackScreen}
         options={{
           tabBarLabel: 'Home',
-          tabBarColor:'#009387',
+          tabBarColor:'#d02860',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
@@ -82,17 +82,17 @@ export default function TabNavigation(){
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Profile',
-          tabBarColor:'#694fad',
+          tabBarColor:'#000',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Leader"
         component={LeaderBoardStackScreen}

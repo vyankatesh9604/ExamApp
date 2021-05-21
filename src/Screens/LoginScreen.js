@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState,useContext }from 'react'
 import { 
     View, 
     Text, 
@@ -14,7 +14,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
-
+import axios from 'axios'
+import {userContext} from '../../App'
 
 export default function LoginScreen({navigation}) {
     const [data ,setData] = React.useState({
@@ -53,6 +54,24 @@ export default function LoginScreen({navigation}) {
         })
     }
     
+    const {state,dispatch} = useContext(userContext)
+
+    const getLogin=({navigation})=>{
+        axios.post('http://192.168.43.247:5000/student/signin',{email:data.email,password:data.password})
+        .then((res) => {
+            if(res.data.status==="fail" ){
+                 		Alert.alert(res.data.message)
+                 	}else{
+                         Alert.alert("Logged IN sucessfully")
+                         dispatch({type:'user',payload:res.data.user})
+                 		navigation.navigate('HomeDrawer')
+            	}
+            }).catch((err)=>{
+                	console.log(err)
+             })
+		
+    }
+
     return (
             <View style={styles.container}>
                 <StatusBar  barStyle="light-content"/>
@@ -134,10 +153,11 @@ export default function LoginScreen({navigation}) {
                     
                     
                             <View style={styles.button}>
+
                                 {/*--------------- sign In Button ---------------------------- */}
                     
 
-                                    <TouchableOpacity style={styles.signIn} onPress={()=>navigation.navigate('HomeDrawer')}>
+                                    <TouchableOpacity style={styles.signIn} onPress={()=>getLogin({navigation})}>
                                         <LinearGradient
                                             colors={['#08d4c4','#01ab9d']}
                                             style={styles.signIn}

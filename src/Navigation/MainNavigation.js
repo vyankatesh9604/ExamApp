@@ -6,8 +6,10 @@ import {DrawerContent} from '../Content/DrawerContent'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons'
 import {Provider as PaperProvider ,DarkTheme as PaperDarkTheme,DefaultTheme as PaperDefaultTheme} from 'react-native-paper'
-import QuizScreen from '../Screens/QuizScreen';
-const QuizStack=createStackNavigator()
+import AssignmentScreen from '../Screens/AssignmentScreen';
+import ProfileScreen from '../Screens/ProfileScreen';
+const AssignmentStack=createStackNavigator()
+const ProfileStack=createStackNavigator()
 
 const Drawer = createDrawerNavigator();
 
@@ -45,7 +47,9 @@ export default function MainNavigation(){
     
       <Drawer.Navigator theme={theme} initialRouteName="Home" drawerContent={props => <DrawerContent toggleTheme={toggleTheme} { ...props}/> }>
         <Drawer.Screen name="HomeDrawer" component={TabNavigation} />
-        <Drawer.Screen name="Quiz" component={QuizStackScreen} 
+        <Drawer.Screen name="Assign" component={AssignmentStackScreen} 
+         />
+          <Drawer.Screen name="Profile" component={ProfileStackScreen} 
          />
         {/* <Drawer.Screen name="Detail" component={DetailStackScreen} /> */}
       </Drawer.Navigator>
@@ -57,11 +61,11 @@ export default function MainNavigation(){
 
 
 
-/////////////////Quiz Stack Screen///////////////////
+/////////////////Assignment Stack Screen///////////////////
 
-const QuizStackScreen = ({navigation}) =>{
+const AssignmentStackScreen = ({navigation}) =>{
   return(
-    <QuizStack.Navigator
+    <AssignmentStack.Navigator
     screenOptions={{
       headerStyle:{
         backgroundColor:'blue'
@@ -71,13 +75,28 @@ const QuizStackScreen = ({navigation}) =>{
         fontWeight:'bold'
       }
     }}>
-         <QuizStack.Screen name="Quiz" component={QuizScreen} options={{
+         <AssignmentStack.Screen name="Assignment" component={AssignmentScreen} options={{
           headerLeft:() => {
             return <Icon.Button  name='md-menu' size={25} backgroundColor='blue'  onPress={()=>navigation.openDrawer()}></Icon.Button>
           },
 
         }}  />
-   </QuizStack.Navigator> 
+   </AssignmentStack.Navigator> 
   )
-      }
+}
+
+const ProfileStackScreen = ({navigation}) =>{
+  return(
+    <ProfileStack.Navigator>
+         <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{
+          headerLeft:() => {
+            return   <Icon.Button name="md-chevron-back-sharp"
+            onPress={() => navigation.goBack('home')}
+            size={26} color="blue" backgroundColor='white'/>
+          },
+
+        }}  />
+   </ProfileStack.Navigator> 
+  )
+}
 
