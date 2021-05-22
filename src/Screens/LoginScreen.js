@@ -8,6 +8,7 @@ import {
     StatusBar,
     Alert
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -64,8 +65,13 @@ export default function LoginScreen({ navigation }) {
                     Alert.alert(res.data.message)
                 } else {
                     Alert.alert("Logged IN sucessfully")
-                    dispatch({ type: 'user', payload: res.data.user })
-                    navigation.navigate('HomeDrawer')
+                    AsyncStorage.setItem('user', JSON.stringify(res.data.user))
+                        .then(() => {
+                            dispatch({ type: 'user', payload: res.data.user })
+                            navigation.navigate('HomeDrawer')
+                        })
+                        .catch(err => console.log(err))
+
                 }
             }).catch((err) => {
                 console.log(err)
