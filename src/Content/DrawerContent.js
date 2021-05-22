@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
     DrawerContentScrollView,
     DrawerItem
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ion from 'react-native-vector-icons/MaterialIcons'
+
 import {
     useTheme,
     Avatar,
@@ -22,9 +23,7 @@ import pic from '../assets/smile_big.png'
 export function DrawerContent(props) {
   
     
-    const paperTheme = useTheme()
-    
-      
+    // const paperTheme = useTheme()
 
     return(
         <View style={{flex:1}}>
@@ -32,10 +31,13 @@ export function DrawerContent(props) {
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection:'row',marginTop:15}}>
+                            <TouchableOpacity>
                             <Avatar.Image 
+                                onPress={()=>{launchImageLibrary}}
                                 source={pic}
                                 size={50}
                             />
+                            </TouchableOpacity>
                             <View style={{ marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>Vyankatesh G</Title>
                                 <Caption style={styles.caption}  onPress={()=>{props.navigation.navigate('Profile')}}><Ion name='edit' style={{marginHorizontal:4}}/><Text style={{color:'blue',fontSize:14}} > Edit Pofile</Text></Caption>

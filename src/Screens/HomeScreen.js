@@ -3,6 +3,7 @@ import React from 'react'
 // // import Header from '../Component/Header/TopHeader'
 // import {useTheme} from '@react-navigation/native'
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import {Text} from 'react-native'
 
 export default function HomeScreen({navigation}) {
     // const {colors} =useTheme()
@@ -20,8 +21,7 @@ export default function HomeScreen({navigation}) {
           <Paragraph>Assignment is about this subject and Due date is 30 may</Paragraph>
         </Card.Content>
         <Card.Actions>
-          <Button>Cancel</Button>
-          <Button>To View</Button>
+          <Button  style={{width:'100%',backgroundColor:'#009387'}}onPress={()=>{navigation.navigate('Assign')}}><Text style={{color:'white'}}>To View</Text></Button>
         </Card.Actions>
       </Card>
       
