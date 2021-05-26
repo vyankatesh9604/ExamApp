@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from '../../Screens/LoginScreen';
-import RegisterScreen from '../../Screens/RegisterScreen';
+import LoginScreen from '../../Screens/Auth/LoginScreen';
+import RegisterScreen from '../../Screens/Auth/RegisterScreen';
 import { DrawerContent } from '../../Content/DrawerContent'
 import mainNavigation from '../MainNavigation'
 import Loading from '../../Loading';

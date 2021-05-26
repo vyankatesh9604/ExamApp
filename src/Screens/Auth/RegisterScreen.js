@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import {
     View,
     Text,
@@ -9,23 +9,28 @@ import {
     Alert
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ion from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
-import { userContext } from '../../App'
-import url from '../url';
+import { userContext } from '../../../App'
+import url from '../../url';
 
-export default function LoginScreen({ navigation }) {
+
+export default function RegisterScreen({ navigation }) {
+
+    const { state, dispatch } = useContext(userContext)
     const [data, setData] = React.useState({
         email: '',
         password: '',
         check_textInputChange: false,
         secureTextEntry: true
     })
+    const [name, setName] = React.useState('')
+    const [collegename, setCollegeName] = React.useState('')
 
     const textInputChnge = (val) => {
         if (val.length !== 0) {
@@ -56,22 +61,19 @@ export default function LoginScreen({ navigation }) {
         })
     }
 
-    const { state, dispatch } = useContext(userContext)
-
-    const getLogin = ({ navigation }) => {
-        axios.post(`${url}/student/signin`, { email: data.email, password: data.password })
+    const getRegister = () => {
+        axios.post(`${url}/student/signup`, { name: name, email: data.email, password: data.password, collegeName: collegename })
             .then((res) => {
                 if (res.data.status === "fail") {
                     Alert.alert(res.data.message)
                 } else {
-                    Alert.alert("Logged IN sucessfully")
                     AsyncStorage.setItem('user', JSON.stringify(res.data.user))
                         .then(() => {
+                            Alert.alert("Register sucessfully")
                             dispatch({ type: 'user', payload: res.data.user })
                             navigation.navigate('HomeDrawer')
                         })
                         .catch(err => console.log(err))
-
                 }
             }).catch((err) => {
                 console.log(err)
@@ -81,9 +83,9 @@ export default function LoginScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
+            <StatusBar backgroundColor="#009387" barStyle="dark-content" />
             <View style={styles.header}>
-                <Text style={styles.text_header}>Login</Text>
+                <Text style={styles.text_header}>Register</Text>
             </View>
 
 
@@ -94,7 +96,22 @@ export default function LoginScreen({ navigation }) {
                 style={styles.footer}
 
             >
+                {/*--------------- Name Text Input ---------------------------- */}
+                <Text style={styles.text_footer}>Name</Text>
+                <View style={styles.action}>
+                    <Ion
+                        name="md-person"
+                        color="#05375a"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Full Name"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(name) => setName(name)}
 
+                    />
+                </View>
                 {/*--------------- Email Text Input ---------------------------- */}
                 <Text style={styles.text_footer}>Email</Text>
                 <View style={styles.action}>
@@ -124,9 +141,7 @@ export default function LoginScreen({ navigation }) {
 
                 {/*--------------- Password Input ---------------------------- */}
 
-                <Text style={styles.text_footer, {
-                    marginTop: 35
-                }}>Password</Text>
+                <Text style={styles.text_footer}>Password</Text>
                 <View style={styles.action}>
                     <Feather
                         name="lock"
@@ -157,29 +172,43 @@ export default function LoginScreen({ navigation }) {
 
 
 
+                <Text style={styles.text_footer}> college Name</Text>
+                <View style={styles.action}>
+                    <MaterialCommunityIcons
+                        name="school"
+                        color="#05375a"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Full Name"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={(collegename) => setCollegeName(collegename)}
 
+                    />
+                </View>
 
                 <View style={styles.button}>
 
-                    {/*--------------- sign In Button ---------------------------- */}
+                    {/*--------------- sign Up Button ---------------------------- */}
 
 
-                    <TouchableOpacity style={styles.signIn} onPress={() => getLogin({ navigation })}>
+                    <TouchableOpacity style={styles.signIn} onPress={() => getRegister({ navigation })}>
                         <LinearGradient
                             colors={['#08d4c4', '#01ab9d']}
                             style={styles.signIn}
                         >
                             <Text style={styles.textSign, {
                                 color: '#fff'
-                            }}>Sign In</Text>
+                            }}>Sign Up</Text>
 
                         </LinearGradient>
                     </TouchableOpacity>
 
-                    {/*--------------- sign up  Button ---------------------------- */}
+                    {/*--------------- sign In  Button ---------------------------- */}
 
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('RegisterScreen')}
+                        onPress={() => navigation.navigate('LoginScreen')}
                         style={[styles.signIn, {
                             borderColor: '#009387',
                             borderWidth: 1,
@@ -188,7 +217,7 @@ export default function LoginScreen({ navigation }) {
                     >
                         <Text style={styles.textSign, {
                             color: "#009387"
-                        }}>Sign Up</Text>
+                        }}>Already Have Account </Text>
                     </TouchableOpacity>
                 </View>
             </Animatable.View>
@@ -231,22 +260,11 @@ const styles = StyleSheet.create({
         borderBottomColor: '#f2f2f2',
         paddingBottom: 5
     },
-    actionError: {
-        flexDirection: 'row',
-        marginTop: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#FF0000',
-        paddingBottom: 5
-    },
     textInput: {
         flex: 1,
         marginTop: Platform.OS === 'ios' ? 0 : -12,
         paddingLeft: 10,
         color: '#05375a',
-    },
-    errorMsg: {
-        color: '#FF0000',
-        fontSize: 14,
     },
     button: {
         alignItems: 'center',

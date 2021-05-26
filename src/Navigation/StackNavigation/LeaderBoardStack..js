@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons'
-import LeaderBoardScreen from '../../Screens/LeaderBoardScreen';
+import LeaderBoardScreen from '../../Screens/Leaderboard/LeaderBoardScreen';
 
 const LeaderBoardStack = createStackNavigator();
 
