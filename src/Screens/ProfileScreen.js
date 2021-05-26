@@ -1,52 +1,3 @@
-// import React from 'react'
-// import { 
-//     View, 
-//     Text, 
-//     TouchableOpacity, 
-//     StyleSheet ,
-//     TextInput,
-//     StatusBar,
-//     Alert
-// } from 'react-native';
-// import {useTheme} from '@react-navigation/native'
-// import Ion from 'react-native-vector-icons/Ionicons';
-
-
-//  export default function ProfileScreen() {
-//   const {colors} =useTheme()
-//   const theme =useTheme()
-//     return (
-//       <View style={styles.container}>
-                
-//                 <View style={styles.header}>
-//                     <Text style={styles.text_header}>Profile</Text>
-//                 </View>
-//                 <View  style={styles.footer}>
-//                   <Text  style={styles.text_footer}>Name</Text>
-//                   <View style={styles.action}>
-//                                 <Ion 
-//                                     name="md-person"
-//                                     color="#05375a"
-//                                     size={20}
-//                                 />
-//                                 <TextInput 
-//                                     placeholder="Your Full Name"
-//                                     placeholderTextColor="#000"
-//                                     textAlign="center"
-//                                     style={styles.textInput}
-//                                     color="#000"
-//                                     borderBottomColor="#fff"
-//                                     pointerEvents="box-none"
-                                   
-                          
-            
-//                                 />
-//                   </View>
-//                 </View>
-//       </View>
-//     );
-// }
-
 // const styles = StyleSheet.create({
 //   container: {
 //     flex: 1, 
@@ -247,11 +198,17 @@
 // })
 
 import React,{ useState,useContext } from 'react'
-import { View,Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
-import { TextInput } from 'react-native-paper';
+import { View,Text, StyleSheet, TouchableOpacity, Alert,TouchableHighlight,Image,TextInput,Dimensions } from 'react-native'
+import Icon from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
+import Ion from 'react-native-vector-icons/Ionicons';
 import {userContext} from '../../App'
 import axios from 'axios'
+import {Avatar} from 'react-native-paper'
+import pic from '../assets/smile_big.png'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+const {height} = Dimensions.get("window")
+
 export default function ProfileScreen() {
     const {state,dispatch} = useContext(userContext)
     const [email, setEmail] = React.useState(state.email);
@@ -269,8 +226,8 @@ export default function ProfileScreen() {
         })
     }
     return (
-        <View>
-           <View>
+        <View style={styles.container}>
+           {/* <View>
                <Text style={{paddingLeft:'40%',fontSize:20,marginVertical:4,paddingTop:'15%'}}>Email</Text>
             <TextInput
                 mode='outlined' 
@@ -309,14 +266,87 @@ export default function ProfileScreen() {
                                                 color:'#fff'
                                         }}>Save</Text>
             </LinearGradient>
-           </TouchableOpacity>
+           </TouchableOpacity> */}
+              <View style={styles.header}>
+                
+              </View>
+             <View style={{position:'absolute',marginLeft:'33%',marginVertical:6}}>
+             <TouchableHighlight
+                        style={styles.profileImgContainer}>
+                        <Image source={pic} style={styles.profileImg} />
+                        
+                </TouchableHighlight>
+            
+             </View>
+        
+             
+              <View style={styles.footer}>
+                    <Text style={[styles.text_footer,{marginVertical:12}]}>Email</Text>
+                        <View style={styles.action}>
+                            <Icon
+                                name="email"
+                                color="#05375a"
+                                size={20}
+                            />
+                            <TextInput
+                                placeholder="Your Email"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                value={email}
+                                onChangeText={(email) => setEmail(email)}
+                            />
+                        </View>
+                        <Text style={[styles.text_footer,{marginTop:8}]}>Name</Text>
+                            <View style={styles.action}>
+                                <Ion 
+                                    name="md-person"
+                                    color="#05375a"
+                                    size={20}
+                                />
+                                <TextInput 
+                                    placeholder="Your Full Name"
+                                    style={styles.textInput}
+                                    autoCapitalize="none"
+                                    value={name}
+                                    onChangeText={(name)=>setName(name)}
+            
+                                />
+                            </View>
+                            <Text style={[styles.text_footer,{marginVertical:20}]}> college Name</Text>
+                            <View style={styles.action}>
+                                <MaterialCommunityIcons
+                                    name="school"
+                                    color="#05375a"
+                                    size={20}
+                                />
+                                <TextInput 
+                                    placeholder="Your Full Name"
+                                    style={styles.textInput}
+                                    autoCapitalize="none"
+                                    value={cname}
+                                    onChangeText={(cname)=>setCName(cname)}
+            
+                                />
+                            </View>
+                            <TouchableOpacity style={styles.signIn} onPress={()=>getUpdate()}>
+                                <LinearGradient
+                                        colors={['#2e64e5','#2e64e5']}
+                                        style={styles.signIn}
+                                    >
+                                        <Text style={styles.textSign,{
+                                                                        color:'#fff'
+                                                                }}>Save</Text>
+                                    </LinearGradient>
+                            </TouchableOpacity>
+            </View>
+        
         </View>
     )
 }
 const styles =StyleSheet.create({
-    input:{
-        marginVertical:8
-    },
+    // input:{
+    //     marginVertical:8
+    // },
     signIn: {
         width: '100%',
         height: 50,
@@ -326,8 +356,60 @@ const styles =StyleSheet.create({
         marginVertical:50,
         
     },
-    textSign: {
-        fontSize:30,
-        fontWeight: 'bold'
-    }
+    // textSign: {
+    //     fontSize:30,
+    //     fontWeight: 'bold'
+    // }
+    container: {
+        flex: 1,
+        backgroundColor: '#2e64e5'
+    },
+    header: {
+        flex:1,
+        justifyContent: 'flex-end',
+        paddingHorizontal: 10,
+        paddingBottom: 50,
+    },
+    footer: {
+        flex: 5,
+        backgroundColor: '#fff',
+        paddingHorizontal: 20,
+        paddingVertical: 30
+    },
+    profileImgContainer: {
+        marginLeft: 8,
+        height: 80,
+        width: 80,
+        borderRadius: 40,
+       
+       
+      },
+      profileImg: {
+        height: 100,
+        width: 100,
+        borderRadius: 150 / 2,
+        overflow: "hidden",
+        borderWidth: 3,
+        borderColor: "black",
+       
+        
+      },
+    text_footer: {
+        color: '#05375a',
+        fontSize: 18,
+        marginVertical:4
+    },
+    action: {
+        flexDirection: 'row',
+        marginTop: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f2f2f2',
+        paddingBottom: 5
+    },
+    textInput: {
+        flex: 1,
+        marginTop: Platform.OS === 'ios' ? 0 : -12,
+        paddingLeft: 10,
+        color: '#05375a',
+    },
 })

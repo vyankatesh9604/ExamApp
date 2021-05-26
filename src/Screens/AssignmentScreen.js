@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { View ,Text} from 'react-native-animatable'
+import axios from 'axios'
+import url from '../url';
 
 export default function AssignmentScreen() {
-    const [loading,setLoading]=useState(false)
-    
+
     return (
        <View>
-           <Text>hiii</Text>
+           <Text>Assignment</Text>
        </View>
     )
 }

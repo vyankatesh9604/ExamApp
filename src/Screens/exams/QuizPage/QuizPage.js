@@ -1,17 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Headline, Title, Button } from 'react-native-paper';
+import moment from 'moment'
 
-const QuizPage = ({ route, navigation }) => {
+const QuizPage = ({ route,navigation}) => {
 
     const paper = route.params.paper
-
+    console.log(paper)
     const [questions, setQuestions] = useState(paper.questions)
     const [currentQuestion, setcurrentQuestion] = useState(1)
+    const [endtime ,setEndTime] =useState(paper.endTime)
 
     const [totalmarks, setTotalmarks] = useState(0)
-    // console.log(questions[currentQuestion - 1].question)
-    console.log(totalmarks)
+    
+
+    useEffect(() => {
+        let x= new moment(paper.startTime)
+        let y= new moment(paper.endTime)
+        let time = moment.duration(y.diff(x)).as('milliseconds')
+        setTimeout(()=>{alert('5 min remaining')},time-300000)
+         
+      }, []);
+    
     const selectedOption = (index) => {
         if (!('selected' in questions[currentQuestion - 1])) {
             let arr = questions
@@ -26,6 +36,13 @@ const QuizPage = ({ route, navigation }) => {
             alert('You have already submitted answer')
         }
     }
+    const TestSubmitted = ({navigation}) =>{
+        // if(endtime === currenttime){
+        //     alert('time is over')
+        // }
+        alert('You have sucessfully submitted Test thank you! ')
+        navigation.navigate('Past Exams')
+    }
     return (
         <>
             <Headline style={styles.subjectName}>{paper.subjectName}</Headline>
@@ -33,7 +50,7 @@ const QuizPage = ({ route, navigation }) => {
 
             {/* current question */}
             <View style={styles.question}>
-                <Text style={{ fontSize: 35 }}>
+                <Text style={{ fontSize: 30,marginTop:50}}>
                     {`Q. ${questions[currentQuestion - 1].question}`}
                 </Text>
             </View>
@@ -43,7 +60,7 @@ const QuizPage = ({ route, navigation }) => {
                         return (
                             'selected' in questions[currentQuestion - 1] &&
                                 opKey === questions[currentQuestion - 1].selectedOption
-                                ? <Button mode="contained" style={styles.optionBtn} key={index} onPress={() => selectedOption(index + 1)}>
+                                ? <Button mode="contained"  style={styles.optionBtn} key={index} onPress={() => selectedOption(index + 1)}>
                                     {`${index + 1}] ${questions[currentQuestion - 1].options[opKey]}`}
                                 </Button> : <Button mode="outlined" style={styles.optionBtn} key={index} onPress={() => selectedOption(index + 1)}>
                                     {`${index + 1}] ${questions[currentQuestion - 1].options[opKey]}`}
@@ -67,7 +84,7 @@ const QuizPage = ({ route, navigation }) => {
                         <Button mode="contained" style={styles.Btn} onPress={() => setcurrentQuestion(currentQuestion - 1)}>
                             Back
                         </Button>
-                        <Button mode="contained" style={styles.submitBtn} onPress={() => navigation.navigate('Past Exams')}>
+                        <Button mode="contained" style={styles.submitBtn} onPress={() => TestSubmitted({navigation})}>
                             Submit Test
                         </Button>
                     </View>
@@ -97,7 +114,7 @@ const styles = StyleSheet.create({
     optionContainer: {
         padding: 18,
         marginTop: 'auto',
-        marginBottom: 40
+        marginBottom: 70
     },
     optionBtn: {
         padding: 10,

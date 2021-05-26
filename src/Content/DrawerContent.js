@@ -20,10 +20,19 @@ import {
 } from 'react-native-paper'
 
 import pic from '../assets/smile_big.png'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { userContext } from '../../App'
 export function DrawerContent(props) {
   
     
     // const paperTheme = useTheme()
+     const getLogout=()=>{
+        AsyncStorage.removeItem('user')
+       .then(() => {
+            props.navigation.navigate('LoginScreen')
+        })
+        .catch(err => console.log(err))
+     }
 
     return(
         <View style={{flex:1}}>
@@ -104,7 +113,7 @@ export function DrawerContent(props) {
                             <Icon name='exit-to-app' color={color} size={size}/>
                         )}
                         label='Sign Out'
-                        onPress={()=>{props.navigation.navigate('LoginScreen')}}
+                        onPress={()=>{getLogout()}}
                     />
 
                 </Drawer.Section>

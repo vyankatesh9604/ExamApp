@@ -8,7 +8,7 @@ import {
     StatusBar,
     Alert
 } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import Ion from 'react-native-vector-icons/Ionicons';
@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
+import { userContext } from '../../App'
 
 
 export default function RegisterScreen({navigation}) {
@@ -64,7 +65,12 @@ export default function RegisterScreen({navigation}) {
                  		Alert.alert(res.data.message)
                  	}else{
                          Alert.alert("Register sucessfully")
-                 		navigation.navigate('LoginScreen')
+                 		AsyncStorage.setItem('user', JSON.stringify(res.data.user))
+                        .then(() => {
+                            dispatch({ type: 'user', payload: res.data.user })
+                            navigation.navigate('HomeDrawer')
+                        })
+                        .catch(err => console.log(err))
             	}
             }).catch((err)=>{
                 	console.log(err)

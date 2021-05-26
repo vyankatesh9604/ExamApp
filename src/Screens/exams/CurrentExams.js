@@ -7,6 +7,7 @@ import moment from 'moment'
 
 const CurrentExams = ({ navigation }) => {
     const [papers, setPapers] = useState([])
+    const [currenttime ,setCurrentTime] =useState()
 
     useEffect(() => {
         axios.get(`${url}/paper/getAllPaper`).then((res) => {
@@ -20,12 +21,21 @@ const CurrentExams = ({ navigation }) => {
         }).catch((err) => {
             console.log(err)
         })
+        let currentDate = moment().format("Do MMM YYYY hh:mma");
+        setCurrentTime(
+            currentDate
+        );
+    
     }, [])
+    
+  
+       
     return (
         <>
             <ScrollView>
                 {papers.length > 0 ? papers.map((paper, index) => {
-
+                      console.log(moment().diff(paper.startTime))
+                      console.log(moment(paper.endTime).diff(moment()))
                     return <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 8 }} key={index}>
                         <Card.Title title={paper.subjectName} style={{ paddingLeft: '30%' }} />
                         <Card.Content style={{ flexDirection: 'row' }}>
@@ -45,14 +55,14 @@ const CurrentExams = ({ navigation }) => {
                             <Title style={{ paddingLeft: '2%' }}>{paper.totalmarks}</Title>
                         </Card.Content>
                         <Card.Actions>
-                            <Button style={{ width: '100%', backgroundColor: '#2e64e5' }} onPress={() => { navigation.navigate('QuizPage', { paper: paper }) }} ><Text style={{ color: 'white' }}>Start Test</Text></Button>
+                            
+                           { moment().diff(paper.startTime)>0 && moment(paper.endTime).diff(moment())<0 &&  <Button style={{ width: '100%', backgroundColor: '#2e64e5' }} onPress={() => { navigation.navigate('QuizPage', { paper: paper }) }} ><Text style={{ color: 'white' }}>Start Test</Text></Button>}
                         </Card.Actions>
                     </Card>
                 }) : <Text>you have no current Exam</Text>
                 }
             </ScrollView>
-        </>
-    )
+        </>    )
 }
 
 export default CurrentExams

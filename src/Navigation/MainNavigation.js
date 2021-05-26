@@ -87,12 +87,22 @@ const AssignmentStackScreen = ({ navigation }) => {
 
 const ProfileStackScreen = ({ navigation }) => {
   return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{
+    <ProfileStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: '#2e64e5'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      }
+    }}>
+    
+      <ProfileStack.Screen name="Profile"  component={ProfileScreen} options={{
         headerLeft: () => {
-          return <Icon.Button name="md-chevron-back-sharp"
+          return <Icon.Button name="md-chevron-back-sharp" 
             onPress={() => navigation.goBack('home')}
-            size={26} color="blue" backgroundColor='white' />
+            size={26} color="blue" backgroundColor='#2e64e5' color='white' />
         },
 
       }} />

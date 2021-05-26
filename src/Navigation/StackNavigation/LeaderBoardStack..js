@@ -10,7 +10,7 @@ const LeaderBoardStackScreen = ({ navigation }) => {
         <LeaderBoardStack.Navigator
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: '#d02860'
+                    backgroundColor: '#2e64e5'
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
@@ -19,7 +19,7 @@ const LeaderBoardStackScreen = ({ navigation }) => {
             }}>
             <LeaderBoardStack.Screen name="LeaderBoard" component={LeaderBoardScreen} options={{
                 headerLeft: () => {
-                    return <Icon.Button name='md-menu' size={25} backgroundColor='#d02860' onPress={() => navigation.openDrawer()}></Icon.Button>
+                    return <Icon.Button name='md-menu' size={25} backgroundColor='#2e64e5' onPress={() => navigation.openDrawer()}></Icon.Button>
                 },
 
             }} />

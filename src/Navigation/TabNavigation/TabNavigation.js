@@ -41,7 +41,7 @@ export default function TabNavigation() {
         component={LeaderBoardStackScreen}
         options={{
           tabBarLabel: 'LeaderBoard',
-          tabBarColor: '#d02860',
+          tabBarColor: '#2e64e5',
           tabBarIcon: ({ color }) => (
             <Ion name="leaderboard" color={color} size={26} />
           ),
