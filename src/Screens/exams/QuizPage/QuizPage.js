@@ -1,27 +1,39 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Headline, Title, Button } from 'react-native-paper';
 import moment from 'moment'
 
-const QuizPage = ({ route,navigation}) => {
+const QuizPage = ({ route, navigation }) => {
 
     const paper = route.params.paper
     console.log(paper)
     const [questions, setQuestions] = useState(paper.questions)
     const [currentQuestion, setcurrentQuestion] = useState(1)
-    const [endtime ,setEndTime] =useState(paper.endTime)
-
+    const remainingTime = moment.duration(moment(paper.endTime).diff(moment())).as('milliseconds')
     const [totalmarks, setTotalmarks] = useState(0)
-    
+    const [currenttime, setCurrentTime] = useState(moment())
 
+
+    // useEffect(() => {
+    //     let x = new moment(paper.startTime)
+    //     let y = new moment(paper.endTime)
+    //     let time = moment.duration(y.diff(x)).as('milliseconds')
+    //     setTimeout(() => { alert('5 min remaining') }, time - 300000)
+
+    // }, []);
     useEffect(() => {
-        let x= new moment(paper.startTime)
-        let y= new moment(paper.endTime)
-        let time = moment.duration(y.diff(x)).as('milliseconds')
-        setTimeout(()=>{alert('5 min remaining')},time-300000)
-         
-      }, []);
-    
+        // if (moment(paper.endTime).diff(currenttime) > 0) {
+        const interval = setInterval(() => setCurrentTime(moment()), 1000)
+        const timeout = setTimeout(() => {
+            clearInterval(interval)
+        }, remainingTime)
+        return () => {
+            clearInterval(interval)
+            clearTimeout(timeout)
+        }
+        // }
+    }, [])
+
     const selectedOption = (index) => {
         if (!('selected' in questions[currentQuestion - 1])) {
             let arr = questions
@@ -36,7 +48,7 @@ const QuizPage = ({ route,navigation}) => {
             alert('You have already submitted answer')
         }
     }
-    const TestSubmitted = ({navigation}) =>{
+    const TestSubmitted = () => {
         // if(endtime === currenttime){
         //     alert('time is over')
         // }
@@ -47,10 +59,11 @@ const QuizPage = ({ route,navigation}) => {
         <>
             <Headline style={styles.subjectName}>{paper.subjectName}</Headline>
             <Text style={styles.questionNum}>Question {currentQuestion}/{questions.length}</Text>
+            <Text>{moment(currenttime).format("hh:mm:ss")}</Text>
 
             {/* current question */}
             <View style={styles.question}>
-                <Text style={{ fontSize: 30,marginTop:50}}>
+                <Text style={{ fontSize: 30, marginTop: 50 }}>
                     {`Q. ${questions[currentQuestion - 1].question}`}
                 </Text>
             </View>
@@ -60,7 +73,7 @@ const QuizPage = ({ route,navigation}) => {
                         return (
                             'selected' in questions[currentQuestion - 1] &&
                                 opKey === questions[currentQuestion - 1].selectedOption
-                                ? <Button mode="contained"  style={styles.optionBtn} key={index} onPress={() => selectedOption(index + 1)}>
+                                ? <Button mode="contained" style={styles.optionBtn} key={index} onPress={() => selectedOption(index + 1)}>
                                     {`${index + 1}] ${questions[currentQuestion - 1].options[opKey]}`}
                                 </Button> : <Button mode="outlined" style={styles.optionBtn} key={index} onPress={() => selectedOption(index + 1)}>
                                     {`${index + 1}] ${questions[currentQuestion - 1].options[opKey]}`}
@@ -81,10 +94,10 @@ const QuizPage = ({ route,navigation}) => {
                     </View>
                     :
                     <View style={styles.btnRow}>
-                        <Button mode="contained" style={styles.Btn} onPress={() => setcurrentQuestion(currentQuestion - 1)}>
+                        {questions.length !== 1 && <Button mode="contained" style={styles.Btn} onPress={() => setcurrentQuestion(currentQuestion - 1)}>
                             Back
-                        </Button>
-                        <Button mode="contained" style={styles.submitBtn} onPress={() => TestSubmitted({navigation})}>
+                        </Button>}
+                        <Button mode="contained" style={styles.submitBtn} onPress={() => TestSubmitted()}>
                             Submit Test
                         </Button>
                     </View>

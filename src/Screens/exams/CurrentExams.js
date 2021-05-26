@@ -7,35 +7,38 @@ import moment from 'moment'
 
 const CurrentExams = ({ navigation }) => {
     const [papers, setPapers] = useState([])
-    const [currenttime ,setCurrentTime] =useState()
+    const [currenttime, setCurrentTime] = useState(moment())
 
     useEffect(() => {
-        axios.get(`${url}/paper/getAllPaper`).then((res) => {
-
-            if (res.data.status === 'sucess') {
-                setPapers(res.data.Papers)
-
-            } else {
-                Alert.alert(res.data.message)
-            }
-        }).catch((err) => {
-            console.log(err)
+        const unsubscribe = navigation.addListener('focus', () => {
+            axios
+                .get(`${url}/paper/getAllPaper`).then((res) => {
+                    if (res.data.status === 'sucess') {
+                        setPapers(res.data.Papers)
+                    } else {
+                        Alert.alert(res.data.message)
+                    }
+                }).catch((err) => {
+                    console.log(err)
+                })
         })
-        let currentDate = moment().format("Do MMM YYYY hh:mma");
-        setCurrentTime(
-            currentDate
-        );
-    
+        return unsubscribe;
+    }, [navigation])
+
+    useEffect(() => {
+        const interval = setInterval(() => setCurrentTime(moment()), 10000)
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
-    
-  
-       
+
+
+
     return (
         <>
             <ScrollView>
                 {papers.length > 0 ? papers.map((paper, index) => {
-                      console.log(moment().diff(paper.startTime))
-                      console.log(moment(paper.endTime).diff(moment()))
+
                     return <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 8 }} key={index}>
                         <Card.Title title={paper.subjectName} style={{ paddingLeft: '30%' }} />
                         <Card.Content style={{ flexDirection: 'row' }}>
@@ -55,14 +58,22 @@ const CurrentExams = ({ navigation }) => {
                             <Title style={{ paddingLeft: '2%' }}>{paper.totalmarks}</Title>
                         </Card.Content>
                         <Card.Actions>
-                            
-                           { moment().diff(paper.startTime)>0 && moment(paper.endTime).diff(moment())<0 &&  <Button style={{ width: '100%', backgroundColor: '#2e64e5' }} onPress={() => { navigation.navigate('QuizPage', { paper: paper }) }} ><Text style={{ color: 'white' }}>Start Test</Text></Button>}
+                            {
+                                currenttime.diff(paper.startTime) > 0 &&
+                                moment(paper.endTime).diff(currenttime) > 0 &&
+                                <Button
+                                    style={{ width: '100%', backgroundColor: '#2e64e5' }}
+                                    onPress={() => { navigation.navigate('QuizPage', { paper: paper }) }}
+                                >
+                                    <Text style={{ color: 'white' }}>Start Test</Text>
+                                </Button>
+                            }
                         </Card.Actions>
                     </Card>
                 }) : <Text>you have no current Exam</Text>
                 }
             </ScrollView>
-        </>    )
+        </>)
 }
 
 export default CurrentExams
