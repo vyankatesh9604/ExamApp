@@ -83,13 +83,13 @@ export function DrawerContent(props) {
                             label='LeaderBoard'
                             onPress={() => { props.navigation.navigate('Leader') }}
                         />
-                        {/* <DrawerItem
+                        <DrawerItem
                             icon={({color,size})=>(
                                 <Icon name='account-outline' color={color} size={size}/>
                             )}
-                            label='Profile'
-                            onPress={()=>{props.navigation.navigate('Profile')}}
-                        /> */}
+                            label='class'
+                            onPress={()=>{props.navigation.navigate('ClassScreen')}}
+                        />
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <Icon name='account-check-outline' color={color} size={size} />

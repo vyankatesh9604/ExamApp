@@ -15,7 +15,7 @@ const Loading = ({ navigation }) => {
                     user = JSON.parse(user)
                     dispatch({ type: 'user', payload: user })
                     console.log(user, 'found!')
-                    navigation.replace('HomeDrawer')
+                    navigation.replace('ClassScreen')
                 }
                 else {
                     navigation.replace('LoginScreen')

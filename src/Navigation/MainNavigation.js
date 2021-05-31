@@ -9,6 +9,7 @@ import { Provider as PaperProvider, DarkTheme as PaperDarkTheme, DefaultTheme as
 import AssignmentScreen from '../Screens/AssignmentScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 import QuizPage from '../Screens/exams/QuizPage/QuizPage'
+import ClassStackScreen from '../Navigation/StackNavigation/ClassStack'
 const AssignmentStack = createStackNavigator()
 const ProfileStack = createStackNavigator()
 
@@ -51,6 +52,7 @@ export default function MainNavigation() {
         <Drawer.Screen name="Assign" component={AssignmentStackScreen} />
         <Drawer.Screen name="Profile" component={ProfileStackScreen} />
         <Drawer.Screen name="QuizPage" component={QuizPage} />
+        <Drawer.Screen name="ClassScreen" component={ClassStackScreen} /> 
         {/* <Drawer.Screen name="Detail" component={DetailStackScreen} /> */}
       </Drawer.Navigator>
 
