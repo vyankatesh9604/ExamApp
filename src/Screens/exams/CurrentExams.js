@@ -60,7 +60,7 @@ const CurrentExams = ({ navigation }) => {
                         <Card.Actions>
                             {
                                 currenttime.diff(paper.startTime) > 0 &&
-                                moment(paper.endTime).diff(currenttime) > 0 &&
+                                moment(paper.endTime).diff(currenttime) > 0 && 
                                 <Button
                                     style={{ width: '100%', backgroundColor: '#2e64e5' }}
                                     onPress={() => { navigation.navigate('QuizPage', { paper: paper }) }}

@@ -12,7 +12,10 @@ const QuizPage = ({ route, navigation }) => {
     const remainingTime = moment.duration(moment(paper.endTime).diff(moment())).as('milliseconds')
     const [totalmarks, setTotalmarks] = useState(0)
     const [currenttime, setCurrentTime] = useState(moment())
-
+    let dur = moment.duration(
+        moment(paper.endTime).diff(moment(currenttime))
+    );
+   
 
     // useEffect(() => {
     //     let x = new moment(paper.startTime)
@@ -26,6 +29,7 @@ const QuizPage = ({ route, navigation }) => {
         const interval = setInterval(() => setCurrentTime(moment()), 1000)
         const timeout = setTimeout(() => {
             clearInterval(interval)
+            navigation.navigate('Current Exams')
         }, remainingTime)
         return () => {
             clearInterval(interval)
@@ -59,7 +63,7 @@ const QuizPage = ({ route, navigation }) => {
         <>
             <Headline style={styles.subjectName}>{paper.subjectName}</Headline>
             <Text style={styles.questionNum}>Question {currentQuestion}/{questions.length}</Text>
-            <Text>{moment(currenttime).format("hh:mm:ss")}</Text>
+            <Text style={{textAlign:'center',marginVertical:4,fontSize:25}}>{`${dur.hours()} hrs ${dur.minutes()} min ${dur.seconds()} sec remaining.`}</Text>
 
             {/* current question */}
             <View style={styles.question}>

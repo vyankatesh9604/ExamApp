@@ -69,7 +69,7 @@ export function DrawerContent(props) {
                         </View>
                     </View>
                     <Drawer.Section style={styles.drawerSection}>
-                        <DrawerItem
+                        {/* <DrawerItem
                             icon={({ color, size }) => (
                                 <Icon name='home' color={color} size={size} />
                             )}
@@ -82,7 +82,7 @@ export function DrawerContent(props) {
                             )}
                             label='LeaderBoard'
                             onPress={() => { props.navigation.navigate('Leader') }}
-                        />
+                        /> */}
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <Icon name='account-outline' color={color} size={size} />
