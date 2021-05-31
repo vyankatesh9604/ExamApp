@@ -47,12 +47,12 @@ export default function MainNavigation() {
   return (
     <PaperProvider theme={theme}>
 
-      <Drawer.Navigator theme={theme} initialRouteName="Home" drawerContent={props => <DrawerContent toggleTheme={toggleTheme} {...props} />}>
+      <Drawer.Navigator theme={theme} initialRouteName="Classes" drawerContent={props => <DrawerContent toggleTheme={toggleTheme} {...props} />}>
         <Drawer.Screen name="HomeDrawer" component={TabNavigation} />
         <Drawer.Screen name="Assign" component={AssignmentStackScreen} />
         <Drawer.Screen name="Profile" component={ProfileStackScreen} />
         <Drawer.Screen name="QuizPage" component={QuizPage} />
-        <Drawer.Screen name="ClassScreen" component={ClassStackScreen} /> 
+        <Drawer.Screen name="Classes" component={ClassStackScreen} />
         {/* <Drawer.Screen name="Detail" component={DetailStackScreen} /> */}
       </Drawer.Navigator>
 
@@ -90,19 +90,19 @@ const AssignmentStackScreen = ({ navigation }) => {
 const ProfileStackScreen = ({ navigation }) => {
   return (
     <ProfileStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#2e64e5'
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold'
-      }
-    }}>
-    
-      <ProfileStack.Screen name="Profile"  component={ProfileScreen} options={{
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#2e64e5'
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold'
+        }
+      }}>
+
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} options={{
         headerLeft: () => {
-          return <Icon.Button name="md-chevron-back-sharp" 
+          return <Icon.Button name="md-chevron-back-sharp"
             onPress={() => navigation.goBack('home')}
             size={26} color="blue" backgroundColor='#2e64e5' color='white' />
         },

@@ -19,8 +19,7 @@ const StackNavigation = ({ navigation }) => {
         <Stack.Screen name="Loading" component={Loading} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        <Stack.Screen name='HomeDrawer' component={mainNavigation}/>
-        <Stack.Screen name="ClassScreen" component={ClassStackScreen} />
+        <Stack.Screen name='HomeDrawer' component={mainNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   )
