@@ -4,6 +4,7 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import axios from 'axios'
 import url from '../../url'
 import moment from 'moment'
+import QuizModal from './QuizPage/QuizModal'
 
 const CurrentExams = ({ navigation }) => {
     const [papers, setPapers] = useState([])
@@ -14,7 +15,7 @@ const CurrentExams = ({ navigation }) => {
             axios
                 .get(`${url}/paper/getAllPaper`).then((res) => {
                     if (res.data.status === 'sucess') {
-                        setPapers(res.data.Papers)
+                        setPapers(res.data.Papers.filter((paper) => moment(currenttime).isBefore(moment(paper.endTime))))
                     } else {
                         Alert.alert(res.data.message)
                     }
@@ -26,7 +27,7 @@ const CurrentExams = ({ navigation }) => {
     }, [navigation])
 
     useEffect(() => {
-        const interval = setInterval(() => setCurrentTime(moment()), 10000)
+        const interval = setInterval(() => setCurrentTime(moment()), 5000)
         return () => {
             clearInterval(interval)
         }
@@ -57,16 +58,17 @@ const CurrentExams = ({ navigation }) => {
                             <Title>Total Marks :</Title>
                             <Title style={{ paddingLeft: '2%' }}>{paper.totalmarks}</Title>
                         </Card.Content>
-                        <Card.Actions>
+
+                        <Card.Actions style={{ justifyContent: 'center' }}>
                             {
                                 currenttime.diff(paper.startTime) > 0 &&
-                                moment(paper.endTime).diff(currenttime) > 0 && 
-                                <Button
-                                    style={{ width: '100%', backgroundColor: '#2e64e5' }}
-                                    onPress={() => { navigation.navigate('QuizPage', { paper: paper }) }}
-                                >
-                                    <Text style={{ color: 'white' }}>Start Test</Text>
-                                </Button>
+                                moment(paper.endTime).diff(currenttime) > 0 &&
+                                <QuizModal
+                                    papers={papers}
+                                    i={index}
+                                    setPapers={setPapers}
+                                    navigation={navigation}
+                                />
                             }
                         </Card.Actions>
                     </Card>

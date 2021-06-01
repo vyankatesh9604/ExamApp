@@ -9,34 +9,25 @@ const QuizPage = ({ route, navigation }) => {
     console.log(paper)
     const [questions, setQuestions] = useState(paper.questions)
     const [currentQuestion, setcurrentQuestion] = useState(1)
-    const remainingTime = moment.duration(moment(paper.endTime).diff(moment())).as('milliseconds')
     const [totalmarks, setTotalmarks] = useState(0)
-    const [currenttime, setCurrentTime] = useState(moment())
-    let dur = moment.duration(
-        moment(paper.endTime).diff(moment(currenttime))
-    );
-   
+
+    // const remainingTime = moment.duration(moment(paper.endTime).diff(moment())).as('milliseconds')
+    // const [currenttime, setCurrentTime] = useState(moment())
+    // let dur = moment.duration( moment(paper.endTime).diff(moment(currenttime)));
 
     // useEffect(() => {
-    //     let x = new moment(paper.startTime)
-    //     let y = new moment(paper.endTime)
-    //     let time = moment.duration(y.diff(x)).as('milliseconds')
-    //     setTimeout(() => { alert('5 min remaining') }, time - 300000)
-
-    // }, []);
-    useEffect(() => {
-        // if (moment(paper.endTime).diff(currenttime) > 0) {
-        const interval = setInterval(() => setCurrentTime(moment()), 1000)
-        const timeout = setTimeout(() => {
-            clearInterval(interval)
-            navigation.navigate('Current Exams')
-        }, remainingTime)
-        return () => {
-            clearInterval(interval)
-            clearTimeout(timeout)
-        }
-        // }
-    }, [])
+    //     if (moment(paper.endTime).diff(currenttime) > 0) {
+    //         const interval = setInterval(() => setCurrentTime(moment()), 1000)
+    //         const timeout = setTimeout(() => {
+    //             clearInterval(interval)
+    //             navigation.navigate('Current Exams')
+    //         }, remainingTime)
+    //         return () => {
+    //             clearInterval(interval)
+    //             clearTimeout(timeout)
+    //         }
+    //     }
+    // }, [])
 
     const selectedOption = (index) => {
         if (!('selected' in questions[currentQuestion - 1])) {
@@ -59,11 +50,12 @@ const QuizPage = ({ route, navigation }) => {
         alert('You have sucessfully submitted Test thank you! ')
         navigation.navigate('Past Exams')
     }
+
     return (
         <>
             <Headline style={styles.subjectName}>{paper.subjectName}</Headline>
             <Text style={styles.questionNum}>Question {currentQuestion}/{questions.length}</Text>
-            <Text style={{textAlign:'center',marginVertical:4,fontSize:25}}>{`${dur.hours()} hrs ${dur.minutes()} min ${dur.seconds()} sec remaining.`}</Text>
+            <Text style={{ textAlign: 'center', marginVertical: 4, fontSize: 25 }}>{`${dur.hours()} hrs ${dur.minutes()} min ${dur.seconds()} sec remaining.`}</Text>
 
             {/* current question */}
             <View style={styles.question}>
