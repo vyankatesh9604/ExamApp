@@ -13,9 +13,9 @@ const CurrentExams = ({ navigation }) => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             axios
-                .get(`${url}/paper/getAllPaper`).then((res) => {
+                .post(`${url}/paper/getAllPaper`,{classId: "60b8984b54034c2298ffdbaf"}).then((res) => {
                     if (res.data.status === 'sucess') {
-                        setPapers(res.data.Papers.filter((paper) => moment(currenttime).isBefore(moment(paper.endTime))))
+                        setPapers(res.data.Papers)
                     } else {
                         Alert.alert(res.data.message)
                     }
