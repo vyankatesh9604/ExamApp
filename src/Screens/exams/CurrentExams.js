@@ -1,19 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Alert, StyleSheet, Text, View, ScrollView } from 'react-native'
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import axios from 'axios'
 import url from '../../url'
 import moment from 'moment'
 import QuizModal from './QuizPage/QuizModal'
+import { userContext } from '../../../App';
 
 const CurrentExams = ({ navigation }) => {
     const [papers, setPapers] = useState([])
     const [currenttime, setCurrentTime] = useState(moment())
 
+    const { state, dispatch } = useContext(userContext)
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             axios
-                .post(`${url}/paper/getAllPaper`,{classId: "60b8984b54034c2298ffdbaf"}).then((res) => {
+                .post(`${url}/paper/getAllPaper`, { classId: state.ActiveclassId }).then((res) => {
                     if (res.data.status === 'sucess') {
                         setPapers(res.data.Papers)
                     } else {

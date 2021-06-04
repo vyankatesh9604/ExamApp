@@ -90,13 +90,13 @@ export function DrawerContent(props) {
                             label='Classes'
                             onPress={() => { props.navigation.navigate('Classes') }}
                         />
-                        <DrawerItem
+                        {/* <DrawerItem
                             icon={({ color, size }) => (
                                 <Icon name='account-check-outline' color={color} size={size} />
                             )}
                             label='Assignment'
                             onPress={() => { props.navigation.navigate('Assign') }}
-                        />
+                        /> */}
                     </Drawer.Section>
                     {/* <Drawer.Section title='preferences'>
                             <TouchableRipple  onPress={()=>{props.toggleTheme()}}>

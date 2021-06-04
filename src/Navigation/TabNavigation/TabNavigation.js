@@ -5,8 +5,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ExamStackScreen from '../StackNavigation/ExamStack';
 import HomeStackScreen from '../StackNavigation/HomeStack';
 import LeaderBoardStackScreen from '../StackNavigation/LeaderBoardStack.';
+import AssignmentStack from '../StackNavigation/AssignmentStack';
 
 const Tab = createMaterialBottomTabNavigator();
+
 export default function TabNavigation() {
   return (
     <Tab.Navigator
@@ -30,6 +32,17 @@ export default function TabNavigation() {
         component={ExamStackScreen}
         options={{
           tabBarLabel: 'Exams',
+          tabBarColor: '#2e64e5',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="comment-multiple" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Assignment"
+        component={AssignmentStack}
+        options={{
+          tabBarLabel: 'Assignments',
           tabBarColor: '#2e64e5',
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="comment-multiple" color={color} size={26} />

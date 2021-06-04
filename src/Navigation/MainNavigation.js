@@ -6,11 +6,11 @@ import { DrawerContent } from '../Content/DrawerContent'
 import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { Provider as PaperProvider, DarkTheme as PaperDarkTheme, DefaultTheme as PaperDefaultTheme } from 'react-native-paper'
-import AssignmentScreen from '../Screens/AssignmentScreen';
+
 import ProfileScreen from '../Screens/ProfileScreen';
 import QuizPage from '../Screens/exams/QuizPage/QuizPage'
 import ClassStackScreen from '../Navigation/StackNavigation/ClassStack'
-const AssignmentStack = createStackNavigator()
+
 const ProfileStack = createStackNavigator()
 
 const Drawer = createDrawerNavigator();
@@ -49,7 +49,7 @@ export default function MainNavigation() {
 
       <Drawer.Navigator theme={theme} initialRouteName="Classes" drawerContent={props => <DrawerContent toggleTheme={toggleTheme} {...props} />}>
         <Drawer.Screen name="HomeDrawer" component={TabNavigation} />
-        <Drawer.Screen name="Assign" component={AssignmentStackScreen} />
+        {/* <Drawer.Screen name="Assign" component={AssignmentStackScreen} /> */}
         <Drawer.Screen name="Profile" component={ProfileStackScreen} />
         <Drawer.Screen name="QuizPage" component={QuizPage} />
         <Drawer.Screen name="Classes" component={ClassStackScreen} />
@@ -58,32 +58,6 @@ export default function MainNavigation() {
 
 
     </PaperProvider>
-  )
-}
-
-
-
-/////////////////Assignment Stack Screen///////////////////
-
-const AssignmentStackScreen = ({ navigation }) => {
-  return (
-    <AssignmentStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: 'blue'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        }
-      }}>
-      <AssignmentStack.Screen name="Assignment" component={AssignmentScreen} options={{
-        headerLeft: () => {
-          return <Icon.Button name='md-menu' size={25} backgroundColor='blue' onPress={() => navigation.openDrawer()}></Icon.Button>
-        },
-
-      }} />
-    </AssignmentStack.Navigator>
   )
 }
 
