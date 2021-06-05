@@ -1,5 +1,6 @@
 import React from 'react'
 import Ion from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ExamStackScreen from '../StackNavigation/ExamStack';
@@ -20,10 +21,12 @@ export default function TabNavigation() {
         name="Home"
         component={HomeStackScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Stream',
           tabBarColor: '#009387',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <Icon name="chatbubbles-sharp" color={color} size={24} />
+            // <MaterialCommunityIcons name="comment-multiple" color={color} size={26} />
+            // <MaterialCommunityIcons name="home" color={color} size={26} />
           ),
         }}
       />
@@ -34,7 +37,7 @@ export default function TabNavigation() {
           tabBarLabel: 'Exams',
           tabBarColor: '#2e64e5',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="comment-multiple" color={color} size={26} />
+            <MaterialCommunityIcons name="comment-multiple" color={color} size={24} />
           ),
         }}
       />
@@ -45,7 +48,8 @@ export default function TabNavigation() {
           tabBarLabel: 'Assignments',
           tabBarColor: '#2e64e5',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="comment-multiple" color={color} size={26} />
+            <Ion name="assignment" color={color} size={26} />
+            // <MaterialCommunityIcons name="comment-multiple" color={color} size={26} />
           ),
         }}
       />

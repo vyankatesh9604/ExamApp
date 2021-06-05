@@ -58,7 +58,7 @@ const AssignmentSubmit = ({ navigation }) => {
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 180 }}>
                 <Text style={styles.heading}>Submit Your Response</Text>
                 <Button style={styles.btn} mode='contained' onPress={() => { uploadDocumentFile() }}>
-                    <Text style={styles.btnText}>Browse Files</Text>
+                    <Text style={styles.btnText}>Choose from Files</Text>
                 </Button>
                 <Text style={{ marginVertical: 10 }}>*uplaod documents only in PDF format</Text>
             </View>
@@ -76,9 +76,11 @@ const styles = StyleSheet.create({
         marginVertical: 20
     },
     btn: {
-        marginHorizontal: 30
+        width: '60%',
+        backgroundColor: '#2e64e5'
     },
     btnText: {
-        color: '#fff'
+        color: '#fff',
+        textTransform: 'capitalize'
     }
 })

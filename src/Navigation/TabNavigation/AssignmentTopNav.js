@@ -9,7 +9,7 @@ export default function AssignmentTopNav() {
     return (
         <Tab.Navigator>
             <Tab.Screen name="Assignment" component={AssignmentDetails} />
-            <Tab.Screen name="Submissions" component={AssignmentSubmit} />
+            <Tab.Screen name="Submission" component={AssignmentSubmit} />
         </Tab.Navigator>
     );
 }

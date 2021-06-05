@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { ScrollView } from 'react-native';
 import { View, Text } from 'react-native-animatable'
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
 import axios from 'axios'
@@ -26,25 +27,44 @@ const AssignmentScreen = ({ navigation }) => {
 
     return (
         <View>
-            {
-                assignments.map((oneclass, index) => {
-                    return <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 8 }} key={index}>
-                        <Card.Title title={oneclass.assignmentName} />
-                        <Card.Content>
-                            {/* <Title>created by {oneclass.teacher.name}</Title> */}
-                            <Paragraph>Assignment is about this subject and Due date is 30 may</Paragraph>
-                        </Card.Content>
-                        <Card.Actions>
-                            <Button
-                                style={{ width: '100%', backgroundColor: '#009387' }}
-                                onPress={() => { navigation.navigate('AssignmentDetails') }}>
-                                <Text style={{ color: 'white' }} >View</Text>
-                            </Button>
-                        </Card.Actions>
-                    </Card>
+            <ScrollView>
+                {
+                    [1, 2, 3].map((assignment, index) => {
+                        return (
+                            <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 12 }} key={index}>
+                                {/* <Card.Title title={assignment.assignmentName} /> */}
+                                <Card.Title title={`Assignment ${assignment}`} />
+                                <View style={{ paddingHorizontal: 24 }}>
+                                    <View style={{ flexDirection: 'row', marginVertical: 2, }}>
+                                        <Text style={{ fontSize: 16 }}>Due Date :</Text>
+                                        <Text style={{ fontSize: 16 }}> 14th June, 2021</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ flexDirection: 'row', marginVertical: 2, }}>
+                                            <Text style={{ fontSize: 16 }}>Total Marks :</Text>
+                                            <Text style={{ fontSize: 16 }}> 20</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
+                                            <Text style={{ fontSize: 16 }}>Obtained Marks :</Text>
+                                            <Text style={{ fontSize: 16 }}> 20</Text>
+                                        </View>
+                                    </View>
+                                    {/* <Text style={{ fontSize: 18, fontWeight: '800' }}>Instructions</Text> */}
+                                    <Paragraph>*Assignment should be submitted before due date {'\n'}*No submissions will be accpeted after due date</Paragraph>
+                                </View>
+                                <Card.Actions>
+                                    <Button
+                                        style={{ width: '100%', backgroundColor: '#2e64e5' }}
+                                        onPress={() => { navigation.navigate('AssignmentDetails') }}>
+                                        <Text style={{ color: '#fff' }} >View</Text>
+                                    </Button>
+                                </Card.Actions>
+                            </Card>
+                        )
 
-                })
-            }
+                    })
+                }
+            </ScrollView>
         </View>
     )
 }

@@ -13,7 +13,7 @@ const AssignmentStack = ({ navigation }) => {
         <Stack.Navigator
             screenOptions={{
                 headerStyle: {
-                    backgroundColor: 'blue'
+                    backgroundColor: '#2e64e5'
                 },
                 headerTintColor: '#fff',
                 headerTitleStyle: {
@@ -22,11 +22,11 @@ const AssignmentStack = ({ navigation }) => {
             }}>
             <Stack.Screen name="Assignments" component={AssignmentScreen} options={{
                 headerLeft: () => {
-                    return <Icon.Button name='md-menu' size={25} backgroundColor='blue' onPress={() => navigation.openDrawer()}></Icon.Button>
+                    return <Icon.Button name='md-menu' size={25} backgroundColor='#2e64e5' onPress={() => navigation.openDrawer()}></Icon.Button>
                 },
 
             }} />
-            <Stack.Screen name="AssignmentDetails" component={AssignmentTopNav} />
+            <Stack.Screen name="AssignmentDetails" options={{ headerTitle: 'Assignment Details', headerTitleContainerStyle: { margin: 0 } }} component={AssignmentTopNav} />
         </Stack.Navigator>
     )
 }

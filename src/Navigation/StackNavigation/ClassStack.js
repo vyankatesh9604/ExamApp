@@ -9,7 +9,7 @@ import ClassScreen from '../../Screens/class/ClassScreen'
 const ClassStack = createStackNavigator();
 
 const ClassStackScreen = ({ navigation }) => {
-    console.log(navigation)
+    // console.log(navigation)
     return (
         <ClassStack.Navigator
             screenOptions={{
