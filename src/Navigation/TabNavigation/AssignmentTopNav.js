@@ -5,11 +5,15 @@ import AssignmentSubmit from '../../Screens/Assignment/AssignmentSubmit';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function AssignmentTopNav() {
+export default function AssignmentTopNav(props) {
     return (
         <Tab.Navigator>
-            <Tab.Screen name="Assignment" component={AssignmentDetails} />
-            <Tab.Screen name="Submission" component={AssignmentSubmit} />
+            <Tab.Screen name="Assignment">
+                {() => <AssignmentDetails {...props} />}
+            </Tab.Screen>
+            <Tab.Screen name="Submission">
+                {() => <AssignmentSubmit {...props} />}
+            </Tab.Screen>
         </Tab.Navigator>
     );
 }

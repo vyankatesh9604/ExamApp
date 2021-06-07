@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, Text } from 'react-native-paper'
 import DocumentPicker from 'react-native-document-picker';
 import axios from 'axios'
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { View } from 'native-base';
+import Pdf from 'react-native-pdf'
+import url from '../../url';
+import { userContext } from '../../../App';
 
 
-const AssignmentSubmit = ({ navigation }) => {
+const AssignmentSubmit = ({ navigation, route }) => {
+
+    // let assignment = route.params.assignment
+    const [assignment, setAssignment] = useState(route.params.assignment)
+
+    const { state, dispatch } = useContext(userContext)
 
     const uploadDocumentFile = async () => {
 
@@ -32,15 +40,22 @@ const AssignmentSubmit = ({ navigation }) => {
                 console.log('Inside cloudinary pdf upload')
                 axios.post('https://api.cloudinary.com/v1_1/dzjlte5ga/raw/upload', data)
                     .then((res) => {
-                        console.log(res.data)
+                        axios.post(`${url}/assignment/submit_assignment`, {
+                            assignmentId: assignment._id,
+                            student: state._id,
+                            document: res.data.secure_url
+                        }).then((res) => {
+                            if (res.data.status === 'sucess') {
+                                setAssignment(res.data.assignment)
+                            }
+                        })
                     })
                     .catch((err) => {
                         console.log(err)
                     })
             }
             else {
-                setMessage('Please Select PDF File Only')
-                onToggleSnackBar()
+                alert('Please Select PDF File Only')
             }
         } catch (err) {
             if (DocumentPicker.isCancel(err)) {
@@ -55,13 +70,28 @@ const AssignmentSubmit = ({ navigation }) => {
 
     return (
         <>
-            <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 180 }}>
-                <Text style={styles.heading}>Submit Your Response</Text>
-                <Button style={styles.btn} mode='contained' onPress={() => { uploadDocumentFile() }}>
-                    <Text style={styles.btnText}>Choose from Files</Text>
-                </Button>
-                <Text style={{ marginVertical: 10 }}>*uplaod documents only in PDF format</Text>
-            </View>
+            {/* {console.log(assignment.submissions.filter((submission) => submission.student === state._id)[0].document)} */}
+            {
+                assignment.submissions.filter((submission) => submission.student === state._id).length === 0 ?
+                    <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 180 }}>
+                        <Text style={styles.heading}>Submit Your Response</Text>
+                        <Button style={styles.btn} mode='contained' onPress={() => { uploadDocumentFile() }}>
+                            <Text style={styles.btnText}>Choose from Files</Text>
+                        </Button>
+                        <Text style={{ marginVertical: 10 }}>*uplaod documents only in PDF format</Text>
+                    </View>
+                    :
+                    <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                        <Text style={{ fontSize: 16, fontStyle: 'italic', marginTop: 20 }}>You have submitted the assignment</Text>
+                        <Pdf
+                            activityIndicatorProps={{ color: '#2e64e5', progressTintColor: '#2e64e5' }}
+                            source={{ uri: assignment.submissions.filter((submission) => submission.student === state._id)[0].document, cache: true }}
+                            onError={(error) => {
+                                console.log(error);
+                            }}
+                            style={styles.pdf} />
+                    </View>
+            }
         </>
     )
 
@@ -82,5 +112,10 @@ const styles = StyleSheet.create({
     btnText: {
         color: '#fff',
         textTransform: 'capitalize'
-    }
+    },
+    pdf: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height - 150,
+        marginBottom: 70
+    },
 })

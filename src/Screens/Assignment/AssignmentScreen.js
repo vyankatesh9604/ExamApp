@@ -4,6 +4,7 @@ import { View, Text } from 'react-native-animatable'
 import { Button, Card, Title, Paragraph } from 'react-native-paper';
 import axios from 'axios'
 import { userContext } from '../../../App'
+import moment from 'moment'
 
 import url from '../../url';
 
@@ -29,24 +30,24 @@ const AssignmentScreen = ({ navigation }) => {
         <View>
             <ScrollView>
                 {
-                    [1, 2, 3].map((assignment, index) => {
+                    assignments.map((assignment, index) => {
                         return (
                             <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 12 }} key={index}>
-                                {/* <Card.Title title={assignment.assignmentName} /> */}
-                                <Card.Title title={`Assignment ${assignment}`} />
+                                <Card.Title title={assignment.assignmentName} />
                                 <View style={{ paddingHorizontal: 24 }}>
                                     <View style={{ flexDirection: 'row', marginVertical: 2, }}>
                                         <Text style={{ fontSize: 16 }}>Due Date :</Text>
                                         <Text style={{ fontSize: 16 }}> 14th June, 2021</Text>
+                                        {/* <Text>{moment(assignment.dueDate).format('Do MMMM, YYYY hh:mma')}</Text> */}
                                     </View>
                                     <View style={{ flexDirection: 'row' }}>
                                         <View style={{ flexDirection: 'row', marginVertical: 2, }}>
                                             <Text style={{ fontSize: 16 }}>Total Marks :</Text>
-                                            <Text style={{ fontSize: 16 }}> 20</Text>
+                                            <Text style={{ fontSize: 16 }}> {assignment.totalMarks}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
                                             <Text style={{ fontSize: 16 }}>Obtained Marks :</Text>
-                                            <Text style={{ fontSize: 16 }}> 20</Text>
+                                            <Text style={{ fontSize: 16 }}> {JSON.stringify(assignment.totalMarks)}</Text>
                                         </View>
                                     </View>
                                     {/* <Text style={{ fontSize: 18, fontWeight: '800' }}>Instructions</Text> */}
@@ -55,7 +56,9 @@ const AssignmentScreen = ({ navigation }) => {
                                 <Card.Actions>
                                     <Button
                                         style={{ width: '100%', backgroundColor: '#2e64e5' }}
-                                        onPress={() => { navigation.navigate('AssignmentDetails') }}>
+                                        onPress={() => {
+                                            navigation.navigate('AssignmentDetails', { assignment: assignment })
+                                        }}>
                                         <Text style={{ color: '#fff' }} >View</Text>
                                     </Button>
                                 </Card.Actions>

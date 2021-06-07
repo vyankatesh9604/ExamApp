@@ -3,15 +3,16 @@ import { View, StyleSheet, Dimensions } from 'react-native'
 import Pdf from 'react-native-pdf'
 import { Text } from 'react-native-paper'
 
-const AssignmentDetails = ({ navigation }) => {
+const AssignmentDetails = ({ route }) => {
 
-    const source = { uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf', cache: true };
+    let assignment = route.params.assignment
+    const source = { uri: assignment.url, cache: true };
 
     return (
         <>
             <View style={styles.container}>
                 <Pdf
-                    // activityIndicatorProps={{ color: primaryColor, progressTintColor: primaryColor }}
+                    activityIndicatorProps={{ color: '#2e64e5', progressTintColor: '#2e64e5' }}
                     source={source}
                     onError={(error) => {
                         console.log(error);
