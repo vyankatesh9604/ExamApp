@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { Modal, Portal, Text, Button } from 'react-native-paper';
 import moment from 'moment'
 
-const QuizModal = ({ papers, i, setPapers, navigation }) => {
+const QuizModal = ({ paperId, navigation }) => {
 
     const [visible, setVisible] = React.useState(false);
     const [currentQuestion, setcurrentQuestion] = useState(1)
@@ -12,7 +12,7 @@ const QuizModal = ({ papers, i, setPapers, navigation }) => {
     const [currenttime, setCurrentTime] = useState(moment())
     let dur = moment.duration(moment(papers[i].endTime).diff(moment(currenttime)));
 
-    let interval, timeout;
+    let interval;
     const showModal = () => {
         setVisible(true)
         interval = setInterval(() => {
@@ -26,13 +26,13 @@ const QuizModal = ({ papers, i, setPapers, navigation }) => {
 
 
     useEffect(() => {
+
     }, [])
 
     const hideModal = () => {
         setVisible(false)
         setcurrentQuestion(1)
         clearInterval(interval)
-        clearTimeout(timeout)
     }
 
     const TestSubmitted = () => {

@@ -17,6 +17,7 @@ const HomeStackScreen = ({ navigation }) => {
             }
         }}>
             <HomeStack.Screen name="Home" component={HomeScreen} options={{
+                headerTitle: 'Stream',
                 headerLeft: () => {
                     return <Icon.Button name='md-menu' size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
                 },

@@ -81,8 +81,8 @@ const AssignmentSubmit = ({ navigation, route }) => {
                         <Text style={{ marginVertical: 10 }}>*uplaod documents only in PDF format</Text>
                     </View>
                     :
-                    <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-                        <Text style={{ fontSize: 16, fontStyle: 'italic', marginTop: 20 }}>You have submitted the assignment</Text>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Text style={{ fontSize: 16, fontStyle: 'italic', marginTop: 40 }}>You have submitted the assignment</Text>
                         <Pdf
                             activityIndicatorProps={{ color: '#2e64e5', progressTintColor: '#2e64e5' }}
                             source={{ uri: assignment.submissions.filter((submission) => submission.student === state._id)[0].document, cache: true }}

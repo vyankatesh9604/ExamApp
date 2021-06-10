@@ -64,14 +64,15 @@ const CurrentExams = ({ navigation }) => {
 
                         <Card.Actions style={{ justifyContent: 'center' }}>
                             {
-                                currenttime.diff(paper.startTime) > 0 &&
-                                moment(paper.endTime).diff(currenttime) > 0 &&
-                                <QuizModal
-                                    papers={papers}
-                                    i={index}
-                                    setPapers={setPapers}
-                                    navigation={navigation}
-                                />
+                                // currenttime.diff(paper.startTime) > 0 &&
+                                // moment(paper.endTime).diff(currenttime) > 0 &&
+                                <Button
+                                    mode="contained"
+                                    style={{ width: '100%', backgroundColor: '#2e64e5', color: '#fff' }}
+                                    onPress={() => navigation.navigate('QuizPage', { paperId: paper._id })}
+                                >
+                                    Start test
+                                </Button>
                             }
                         </Card.Actions>
                     </Card>
