@@ -4,7 +4,6 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import axios from 'axios'
 import url from '../../url'
 import moment from 'moment'
-import QuizModal from './QuizPage/QuizModal'
 import { userContext } from '../../../App';
 
 const CurrentExams = ({ navigation }) => {
@@ -12,11 +11,10 @@ const CurrentExams = ({ navigation }) => {
     const [currenttime, setCurrentTime] = useState(moment())
 
     const { state, dispatch } = useContext(userContext)
-
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             axios
-                .post(`${url}/paper/getAllPaper`, { classId: state.ActiveclassId }).then((res) => {
+                .post(`${url}/paper/upcomingPapers`, { classId: state.ActiveclassId }).then((res) => {
                     if (res.data.status === 'sucess') {
                         setPapers(res.data.Papers)
                     } else {
@@ -61,11 +59,11 @@ const CurrentExams = ({ navigation }) => {
                             <Title>Total Marks :</Title>
                             <Title style={{ paddingLeft: '2%' }}>{paper.totalmarks}</Title>
                         </Card.Content>
-
                         <Card.Actions style={{ justifyContent: 'center' }}>
                             {
-                                // currenttime.diff(paper.startTime) > 0 &&
-                                // moment(paper.endTime).diff(currenttime) > 0 &&
+                                currenttime.diff(paper.startTime) > 0 &&
+                                moment(paper.endTime).diff(currenttime) > 0 &&
+                                paper.submissions.filter((item) => item.student === state._id).length < 1 &&
                                 <Button
                                     mode="contained"
                                     style={{ width: '100%', backgroundColor: '#2e64e5', color: '#fff' }}
@@ -76,7 +74,9 @@ const CurrentExams = ({ navigation }) => {
                             }
                         </Card.Actions>
                     </Card>
-                }) : <Text>you have no current Exam</Text>
+                }) : <>
+                    <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 18 }}>🙂 No current or upcoming exams 🙂</Text>
+                </>
                 }
             </ScrollView>
         </>)
