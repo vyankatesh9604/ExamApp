@@ -7,7 +7,8 @@ import RegisterScreen from '../../Screens/Auth/RegisterScreen';
 import { DrawerContent } from '../../Content/DrawerContent'
 import mainNavigation from '../MainNavigation'
 import Loading from '../../Loading';
-import ClassStackScreen from '../../Navigation/StackNavigation/ClassStack'
+// import ClassStackScreen from '../../Navigation/StackNavigation/ClassStack'
+import UpdatePasswordStackScreen from './UpdatePasswordStack';
 const Stack = createStackNavigator();
 
 const StackNavigation = ({ navigation }) => {
@@ -20,6 +21,7 @@ const StackNavigation = ({ navigation }) => {
         <Stack.Screen name="LoginScreen" component={LoginScreen} />
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
         <Stack.Screen name='HomeDrawer' component={mainNavigation} />
+        <Stack.Screen name='updatepassword' component={UpdatePasswordStackScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

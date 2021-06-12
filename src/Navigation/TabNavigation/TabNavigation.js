@@ -42,7 +42,7 @@ export default function TabNavigation() {
         }}
       />
       <Tab.Screen
-        name="Assignment"
+        name="Assignments"
         component={AssignmentStack}
         options={{
           tabBarLabel: 'Assignments',

@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation }) {
                 <Button
                   mode='text'
                   style={{ marginLeft: 'auto', marginRight: 20 }}
-                  onPress={() => { navigation.navigate('Assign') }}>
+                  onPress={() => { navigation.navigate('Assignments') }}>
                   <Text style={{ color: '#009387' }}>View</Text>
                 </Button>
               </Card.Actions>

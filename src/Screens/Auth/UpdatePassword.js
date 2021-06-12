@@ -1,31 +1,55 @@
-import React, { useState, useContext } from 'react'
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
-    TextInput,
-    StatusBar,
-    Alert
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import React from 'react'
+import { View, Text,TextInput,StyleSheet,TouchableOpacity, Alert} from 'react-native'
 import * as Animatable from 'react-native-animatable';
-import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Icon from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
-import axios from 'axios'
-import { userContext } from '../../../App'
+import Icon from 'react-native-vector-icons/Fontisto';
+import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import url from '../../url';
+import axios from 'axios';
 
-export default function LoginScreen({ navigation }) {
+const UpdatePassword = ({navigation}) => {
     const [data, setData] = React.useState({
         email: '',
         password: '',
         check_textInputChange: false,
         secureTextEntry: true
     })
+
+    let email=data.email
+    let password = data.password
+
+    const PostData = ()=>{
+        
+
+
+        // fetch(`${url}/student/updatepassword`,{
+        //     method:"post",
+        //     headers:{
+        //         "Content-Type":"application/json"
+        //     },
+        //     body:{
+        //         email,
+        //         password
+        //     }
+        // }).then(res=>res.json())
+        // .then(data=>{
+        //    if(data.error){
+        //      alert(data.error)
+        //    }
+        //    else{
+        //    Alert.alert(data.message)
+        //     navigation.navigate('LoginScreen')
+              
+        //    }
+        // }).catch(err=>{
+        //     console.log(err)
+        // })
+        axios.post(`${url}/student/updatepassword`,{email:data.email,password:data.password}).then(res =>{
+            console.log(res)
+        })
+    }
+
+
 
     const textInputChnge = (val) => {
         if (val.length !== 0) {
@@ -43,6 +67,7 @@ export default function LoginScreen({ navigation }) {
         }
     }
 
+    
     const handlePasswordIcon = (val) => {
         setData({
             ...data,
@@ -56,46 +81,11 @@ export default function LoginScreen({ navigation }) {
         })
     }
 
-    const { state, dispatch } = useContext(userContext)
-
-    const getLogin = ({ navigation }) => {
-        axios.post(`${url}/student/signin`, { email: data.email, password: data.password })
-            .then((res) => {
-                if (res.data.status === "fail") {
-                    Alert.alert(res.data.message)
-                } else {
-                    Alert.alert("Logged IN sucessfully")
-                    AsyncStorage.setItem('user', JSON.stringify(res.data.user))
-                        .then(() => {
-                            dispatch({ type: 'user', payload: res.data.user })
-                            navigation.navigate('HomeDrawer')
-                        })
-                        .catch(err => console.log(err))
-
-                }
-            }).catch((err) => {
-                console.log(err)
-            })
-
-    }
-
     return (
-        <View style={styles.container}>
-            <StatusBar barStyle="light-content" />
-            <View style={styles.header}>
-                <Text style={styles.text_header}>Login</Text>
-            </View>
+        <Card mode='outlined' style={styles.cards}>
+              <Card.Content>
+                <Title style={{textAlign:'center'}}>Enter Details</Title>
 
-
-
-            < Animatable.View
-
-                animation="fadeInUpBig"
-                style={styles.footer}
-
-            >
-
-                {/*--------------- Email Text Input ---------------------------- */}
                 <Text style={styles.text_footer}>Email</Text>
                 <View style={styles.action}>
                     <Icon
@@ -104,7 +94,7 @@ export default function LoginScreen({ navigation }) {
                         size={20}
                     />
                     <TextInput
-                        placeholder="Your Email"
+                        placeholder=" Enter Your Email"
                         style={styles.textInput}
                         autoCapitalize="none"
                         onChangeText={(val) => textInputChnge(val)}
@@ -122,10 +112,9 @@ export default function LoginScreen({ navigation }) {
                         : null}
                 </View>
 
-                {/*--------------- Password Input ---------------------------- */}
 
                 <Text style={styles.text_footer, {
-                    marginTop: 35
+                    marginTop: 25
                 }}>Password</Text>
                 <View style={styles.action}>
                     <Feather
@@ -156,54 +145,23 @@ export default function LoginScreen({ navigation }) {
                 </View>
 
 
-
-
-
-                <View style={styles.button}>
-
-                    {/*--------------- sign In Button ---------------------------- */}
-
-
-                    <TouchableOpacity style={styles.signIn} onPress={() => getLogin({ navigation })}>
-                        <LinearGradient
-                            colors={['#08d4c4', '#01ab9d']}
-                            style={styles.signIn}
-                        >
-                            <Text style={styles.textSign, {
-                                color: '#fff'
-                            }}>Sign In</Text>
-
-                        </LinearGradient>
-                    </TouchableOpacity>
-
-                    {/*--------------- sign up  Button ---------------------------- */}
-
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate('RegisterScreen')}
-                        style={[styles.signIn, {
-                            borderColor: '#009387',
-                            borderWidth: 1,
-                            marginTop: 15
-                        }]}
-                    >
-                        <Text style={styles.textSign, {
-                            color: "#009387"
-                        }}>Sign Up</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={{marginVertical:4}}>
-                        <Text>Don't Know Password?<Text style={{color:"blue" ,marginHorizontal:3}} onPress={()=>navigation.navigate('updatepassword')} >Forget Password</Text></Text>
-                    </TouchableOpacity>
-                </View>
-            </Animatable.View>
-        </View>
-
+              </Card.Content>
+              <Card.Actions style={{ justifyContent: 'center' }}>
+                <Button
+                  style={{ width: '100%', backgroundColor: '#009387' }}
+                  onPress={() =>PostData()} >
+                  <Text style={{ color: 'white' }} >Update Password</Text>
+                </Button>
+              </Card.Actions>
+        </Card>
     )
 }
+
+export default UpdatePassword
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#009387'
+    cards :{
+        marginTop:'50%'
     },
     header: {
         flex: 1,
