@@ -36,7 +36,6 @@ export default function ClassScreen({ navigation }) {
             <Card.Title title={oneclass.name} />
             <Card.Content>
               <Title>created by {oneclass.teacher.name}</Title>
-              <Paragraph>Assignment is about this subject and Due date is 30 may</Paragraph>
             </Card.Content>
             <Card.Actions>
               <Button

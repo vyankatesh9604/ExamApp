@@ -56,6 +56,10 @@ const CurrentExams = ({ navigation }) => {
                             <Title style={{ paddingLeft: '2%' }}>{moment(paper.endTime).format("Do MMM YYYY hh:mma")}</Title>
                         </Card.Content>
                         <Card.Content style={{ flexDirection: 'row' }}>
+                            <Title>Instruction: </Title>
+                            <Title style={{ paddingLeft: '2%' }}>{paper.instruction}</Title>
+                        </Card.Content>
+                        <Card.Content style={{ flexDirection: 'row' }}>
                             <Title>Total Marks :</Title>
                             <Title style={{ paddingLeft: '2%' }}>{paper.totalmarks}</Title>
                         </Card.Content>

@@ -62,6 +62,19 @@ export default function RegisterScreen({ navigation }) {
     }
 
     const getRegister = () => {
+        if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(data.email)) {
+            alert('invalid email')
+            return
+        }
+        if(!isNaN(name)){
+            return alert('please enter character')
+        }
+        if(name === ''){
+            return alert('please enter your name')
+        }
+        if(name === ''){
+            return alert('please enter your college name')
+        }
         axios.post(`${url}/student/signup`, { name: name, email: data.email, password: data.password, collegeName: collegename })
             .then((res) => {
                 if (res.data.status === "fail") {

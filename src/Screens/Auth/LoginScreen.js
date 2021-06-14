@@ -59,6 +59,10 @@ export default function LoginScreen({ navigation }) {
     const { state, dispatch } = useContext(userContext)
 
     const getLogin = ({ navigation }) => {
+        if (!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(data.email)) {
+            alert('invalid email')
+            return
+        }
         axios.post(`${url}/student/signin`, { email: data.email, password: data.password })
             .then((res) => {
                 if (res.data.status === "fail") {

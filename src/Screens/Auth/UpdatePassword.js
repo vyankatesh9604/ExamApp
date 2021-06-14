@@ -14,11 +14,8 @@ const UpdatePassword = ({navigation}) => {
         check_textInputChange: false,
         secureTextEntry: true
     })
-
-    let email=data.email
-    let password = data.password
-
-    const PostData = ()=>{
+    console.log(navigation)
+    const PostData = ({navigation})=>{
         
 
 
@@ -45,7 +42,8 @@ const UpdatePassword = ({navigation}) => {
         //     console.log(err)
         // })
         axios.post(`${url}/student/updatepassword`,{email:data.email,password:data.password}).then(res =>{
-            console.log(res)
+            alert(res.data.message)
+            navigation.navigate('LoginScreen')
         })
     }
 
@@ -149,7 +147,7 @@ const UpdatePassword = ({navigation}) => {
               <Card.Actions style={{ justifyContent: 'center' }}>
                 <Button
                   style={{ width: '100%', backgroundColor: '#009387' }}
-                  onPress={() =>PostData()} >
+                  onPress={() =>PostData({navigation})} >
                   <Text style={{ color: 'white' }} >Update Password</Text>
                 </Button>
               </Card.Actions>

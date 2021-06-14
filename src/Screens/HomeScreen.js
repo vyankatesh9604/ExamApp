@@ -1,35 +1,37 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect  } from 'react'
 //  import {View,Text,StatusBar} from 'react-native'
 // // import Header from '../Component/Header/TopHeader'
 // import {useTheme} from '@react-navigation/native'
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { userContext } from '../../App'
-
+import axios from 'axios';
+import url from '../url';
 export default function HomeScreen({ navigation }) {
   // const {colors} =useTheme()
   // const theme =useTheme()
   const { state, dispatch } = useContext(userContext)
   const [notifications, setNotifications] = useState([])
 
+  const getnotification = () =>{
+    axios.post(`${url}/notification/getAllnotification`,{classId:state.ActiveclassId}).then(res=>{
+      setNotifications(res.data.notification)
+    })
+  }
+
+  useEffect(()=>{
+    getnotification()
+  })
   return (
     <View style={{ flex: 1, backgroundColor: '#ddd' }}>
       {
         <ScrollView>
           {
-            [0, 1, 2, 3].map((v, i) => <Card mode='outlined' style={styles.card} key={i}>
+            notifications.map((singlenotification,index) => <Card mode='outlined' style={styles.card} key={index}>
               <Card.Content>
-                <Title>New Assignment Added</Title>
-                <Paragraph>'Assignment is about this subject and Due date is 30 may'</Paragraph>
+                <Title>{singlenotification.title}</Title>
+                <Paragraph>{singlenotification.notification}</Paragraph>
               </Card.Content>
-              <Card.Actions style={{ justifyContent: 'center' }}>
-                <Button
-                  mode='text'
-                  style={{ marginLeft: 'auto', marginRight: 20 }}
-                  onPress={() => { navigation.navigate('Assignments') }}>
-                  <Text style={{ color: '#009387' }}>View</Text>
-                </Button>
-              </Card.Actions>
             </Card>)}
           {/* <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 8 }}>
         <Card.Title title="Gr Name" />
