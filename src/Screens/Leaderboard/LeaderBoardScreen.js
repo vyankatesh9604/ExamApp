@@ -9,44 +9,46 @@ import { BarChart, PieChart } from "react-native-chart-kit";
 
 
 
+
 export default function LeaderBoardScreen() {
   const { state } = useContext(userContext)
-  const data = {
-    labels: ["Math", "Science"],
-    datasets: [
-      {
-        data: [80, 100]
-      }
-    ]
-  };
-  const chartConfig = {
-    backgroundGradientFrom: "#fff",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#fff",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `#2e64e5`,
-    strokeWidth: 2, // optional, default 3
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false // optional
-  };
-  const screenWidth = Dimensions.get("window").width;
-  const piedata = [
-    {
-      name: "Math",
-      percentage: 50,
-      color: "rgba(131, 167, 234, 1)",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
-    {
-      name: "Science",
-      percentage: 50,
-      color: "#F00",
-      legendFontColor: "#7F7F7F",
-      legendFontSize: 15
-    },
+  
+  // const data = {
+  //   labels: ["Math", "Science"],
+  //   datasets: [
+  //     {
+  //       data: [80, 100]
+  //     }
+  //   ]
+  // };
+  // const chartConfig = {
+  //   backgroundGradientFrom: "#fff",
+  //   backgroundGradientFromOpacity: 0,
+  //   backgroundGradientTo: "#fff",
+  //   backgroundGradientToOpacity: 0.5,
+  //   color: (opacity = 1) => `#2e64e5`,
+  //   strokeWidth: 2, // optional, default 3
+  //   barPercentage: 0.5,
+  //   useShadowColorFromDataset: false // optional
+  // };
+  // const screenWidth = Dimensions.get("window").width;
+  // const piedata = [
+  //   {
+  //     name: "Math",
+  //     percentage: 50,
+  //     color: "rgba(131, 167, 234, 1)",
+  //     legendFontColor: "#7F7F7F",
+  //     legendFontSize: 15
+  //   },
+  //   {
+  //     name: "Science",
+  //     percentage: 50,
+  //     color: "#F00",
+  //     legendFontColor: "#7F7F7F",
+  //     legendFontSize: 15
+  //   },
 
-  ];
+  // ];
 
 
 
@@ -81,7 +83,7 @@ export default function LeaderBoardScreen() {
 
       <View style={styles.footer}>
         <ScrollView>
-          <BarChart
+          {/* <BarChart
             data={data}
             width={screenWidth}
             height={220}
@@ -89,8 +91,9 @@ export default function LeaderBoardScreen() {
             verticalLabelRotation={30}
             style={{ marginTop: '20%' }}
             fromZero='true'
-          />
-          <Text style={{ textAlign: 'center', fontSize: 20 }}>Test Performance(%)</Text>
+          /> */}
+        
+          {/* <Text style={{ textAlign: 'center', fontSize: 20 }}>Test Performance(%)</Text>
           <PieChart
             data={piedata}
             width={screenWidth}
@@ -100,8 +103,41 @@ export default function LeaderBoardScreen() {
             backgroundColor={"transparent"}
             absolute
           />
-          <Text style={{ textAlign: 'center', fontSize: 20 }}>Subject Analysis(%)</Text>
-        </ScrollView>
+          <Text style={{ textAlign: 'center', fontSize: 20 }}>Subject Analysis(%)</Text> */}
+          <Text style={{textAlign:'center',fontSize:20,marginTop:'20%'}}>Top Three</Text>
+          <View>
+          <Card mode='outlined' style={styles.card}>
+              <Card.Content style={{flexDirection:'row'}}>
+                <Title>vyankatesh</Title>
+                <Title style={{marginLeft:'30%'}}>Rank #2</Title>
+              </Card.Content>
+          </Card>
+          <Card mode='outlined' style={styles.card1}>
+              <Card.Content style={{flexDirection:'row'}}>
+                <Title>vyankatesh</Title>
+                <Title style={{marginLeft:'30%'}}>Rank #3</Title>
+              </Card.Content>
+          </Card>
+          <Card mode='outlined' style={styles.card1}>
+              <Card.Content style={{flexDirection:'row'}}>
+                <Title>vyankatesh</Title>
+                <Title style={{marginLeft:'30%'}}>Rank #4</Title>
+              </Card.Content>
+          </Card>
+          <Card mode='outlined' style={styles.card1}>
+              <Card.Content style={{flexDirection:'row'}}>
+                <Title>vyankatesh</Title>
+                <Title style={{marginLeft:'30%'}}>Rank #5</Title>
+              </Card.Content>
+            </Card>
+            <Card mode='outlined' style={styles.card1}>
+              <Card.Content style={{flexDirection:'row'}}>
+                <Title>vyankatesh</Title>
+                <Title style={{marginLeft:'30%'}}>Rank #6</Title>
+              </Card.Content>
+            </Card>
+            </View>
+          </ScrollView>
       </View>
 
     </View>
@@ -132,5 +168,26 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 15,
+  },
+  card: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 0,
+    marginTop:'20%',
+    borderTopLeftRadius:20,
+    backgroundColor:'lightgray'
+  },
+  card1: {
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    borderTopLeftRadius: 0,
+    marginTop:'3%',
+    borderTopLeftRadius:20
   }
 })

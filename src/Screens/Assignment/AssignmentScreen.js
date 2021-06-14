@@ -47,8 +47,8 @@ const AssignmentScreen = ({ navigation }) => {
                                             <View style={{ paddingHorizontal: 24 }}>
                                                 <View style={{ flexDirection: 'row', marginVertical: 2, }}>
                                                     <Text style={{ fontSize: 16 }}>Due Date :</Text>
-                                                    <Text style={{ fontSize: 16 }}> 14th June, 2021</Text>
-                                                    {/* <Text>{moment(assignment.dueDate).format('Do MMMM, YYYY hh:mma')}</Text> */}
+                                                    {/* <Text style={{ fontSize: 16 }}> 14th June, 2021</Text> */}
+                                                    <Text>{moment(assignment.dueDate).format('Do MMMM, YYYY hh:mma')}</Text>
                                                 </View>
                                                 <View style={{ flexDirection: 'row' }}>
                                                     <View style={{ flexDirection: 'row', marginVertical: 2, }}>
@@ -57,7 +57,7 @@ const AssignmentScreen = ({ navigation }) => {
                                                     </View>
                                                     <View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
                                                         <Text style={{ fontSize: 16 }}>Obtained Marks :</Text>
-                                                        <Text style={{ fontSize: 16 }}> {JSON.stringify(assignment.totalMarks)}</Text>
+                                                        <Text style={{ fontSize: 16 }}> {JSON.stringify(assignment.submissions.filter((s)=>s.student === state._id)[0].obtainedMarks)}</Text>
                                                     </View>
                                                 </View>
                                                 {/* <Text style={{ fontSize: 18, fontWeight: '800' }}>Instructions</Text> */}
