@@ -52,7 +52,8 @@ const PastExams = ({ navigation }) => {
                         </Card.Content>
                         <Card.Content style={{ flexDirection: 'row' }}>
                             <Title>Obtained Marks :</Title>
-                            <Title style={{ paddingLeft: '2%' }}> {paper.submissions.filter((item) => item.student === state._id)[0].obtainedMarks}</Title>
+                            <Title style={{ paddingLeft: '2%' }}> {paper.totalmarks}</Title>
+                            {/* <Title style={{ paddingLeft: '2%' }}> {paper.submissions.filter((item) => item.student === state._id)[0].obtainedMarks}</Title> */}
                         </Card.Content>
                     </Card>
                 }) : <Text style={{ textAlign: 'center', marginTop: 30, fontSize: 18 }}>No exams available ...! 🙂</Text>

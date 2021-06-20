@@ -45,30 +45,31 @@ export default function LeaderBoardScreen() {
   //     percentage: 50,
   //     color: "#F00",
   //     legendFontColor: "#7F7F7F",
-  //     legendFontSize: 15
+  //     legendFontSize: 15 
   //   },
 
   // ];
 
 
-
+var smile
 
 
 
   return (
+   
     <View style={styles.container}>
+      
       <View style={styles.header}>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.headerText}>Hello,{state.name}</Text>
-          <Avatar.Text size={80} label="VG"
-
-            style={{ marginLeft: 60 }}
-          />
-        </View>
+          <View style={{flexDirection:'row',marginHorizontal:30}}>
+            <View><Avatar.Text size={80} label="VG" style={{marginHorizontal:6}}/><Text style={{color:'white'}}>Vyankatesh</Text><Text style={{color:'white',fontSize:26,marginHorizontal:15}}>#2</Text></View>
+            <View ><Text style={{fontSize:30,marginHorizontal:28}}>👑</Text><Avatar.Text size={80} label="Ro" style={{marginHorizontal:6,elevation:30,}}/><Text style={{color:'white', marginHorizontal:25}}>Rohan</Text><Text style={{color:'white',fontSize:26,marginHorizontal:25}}>#1</Text></View>
+            <View><Avatar.Text size={80} label="Rg" style={{marginHorizontal:6}}/><Text style={{color:'white',marginHorizontal:15}}>Raghuveer</Text><Text style={{color:'white',fontSize:26,marginHorizontal:25}}>#3</Text></View>
+       </View>
       </View>
+      
 
 
-      <View style={{ flexDirection: 'row', position: 'absolute' }}>
+      {/* <View style={{ flexDirection: 'row', position: 'absolute' }}>
         <Card mode='outlined' style={{ marginHorizontal: 8, marginTop: '35%', width: '45%', height: 120 }}>
           <Card.Title title="overAll Rank" />
           <Card.Content >
@@ -79,7 +80,7 @@ export default function LeaderBoardScreen() {
           <Card.Title title="Last Test Rank" />
           <Headline size={20} style={{ textAlign: 'center', marginTop: '20%' }}>#5</Headline>
         </Card>
-      </View>
+      </View> */}
 
       <View style={styles.footer}>
         <ScrollView>
@@ -104,7 +105,6 @@ export default function LeaderBoardScreen() {
             absolute
           />
           <Text style={{ textAlign: 'center', fontSize: 20 }}>Subject Analysis(%)</Text> */}
-          <Text style={{textAlign:'center',fontSize:20,marginTop:'20%'}}>Top Three</Text>
           <View>
           <Card mode='outlined' style={styles.card}>
               <Card.Content style={{flexDirection:'row'}}>
@@ -147,17 +147,19 @@ export default function LeaderBoardScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2e64e5'
+    backgroundColor: '#fff'
   },
   header: {
     flex: 1,
     justifyContent: 'flex-end',
     paddingHorizontal: 10,
     paddingBottom: 50,
+    backgroundColor:'#2e64e5',
+    borderBottomRightRadius:60,
+    borderBottomLeftRadius:60
   },
   footer: {
-    flex: 4,
-    backgroundColor: '#fff',
+    flex: 2,
     paddingVertical: 30
   },
   headerText: {
@@ -176,9 +178,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderTopLeftRadius: 0,
-    marginTop:'20%',
+    marginTop:'1%',
     borderTopLeftRadius:20,
-    backgroundColor:'lightgray'
+    backgroundColor:'#fff',
+    elevation: 4,
   },
   card1: {
     marginVertical: 8,
@@ -188,6 +191,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderTopLeftRadius: 0,
     marginTop:'3%',
-    borderTopLeftRadius:20
+    borderTopLeftRadius:20,
+    elevation: 4,
   }
 })

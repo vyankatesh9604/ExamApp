@@ -208,14 +208,17 @@ import {Avatar} from 'react-native-paper'
 import pic from '../assets/smile_big.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 const {height} = Dimensions.get("window")
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
+import url from '../url';
 
 export default function ProfileScreen() {
     const {state,dispatch} = useContext(userContext)
+    const [fileUri, SetFileuri] = useState()
     const [email, setEmail] = React.useState(state.email);
     const [name, setName] = React.useState(state.name);
     const [cname, setCName] = React.useState(state.cname);
     const getUpdate = () =>{
-        axios.post('http://192.168.43.247:5000/student/profileupdate',{id:state._id,email:email,name:name,collegeName:cname}).then((res)=>{
+        axios.post(`http://192.168.43.247:5000/student/profileupdate`,{id:state._id,email:email,name:name,collegeName:cname}).then((res)=>{
             if(res.data.status === 'sucess'){
                 Alert.alert('updated sucessfully')
                 dispatch({type:'user',payload:res.data.user})
@@ -223,7 +226,33 @@ export default function ProfileScreen() {
             else{
                 Alert.alert('something went wrong')
             }
+        }).catch(err=>{
+            console.log(err)
         })
+    }
+    const chooseImage = () => {
+        let options = {
+        title: 'Select Avatar', 
+        cameraType: 'front',
+        mediaType: 'photo' ,
+        storageOptions: {
+        skipBackup: true,
+        path: 'images',
+        },
+        };
+    launchImageLibrary(options, (response) => {
+        console.log('Response = ', response);
+        if (response.didCancel) {
+        console.log('User cancelled image picker');
+        } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+        } else {
+        SetFileuri(response.uri) //update state to update Image
+        }
+        });
     }
     return (
         <View style={styles.container}>
@@ -271,12 +300,16 @@ export default function ProfileScreen() {
                 
               </View>
              <View style={{position:'absolute',marginLeft:'33%',marginVertical:6}}>
-             <TouchableHighlight
-                        style={styles.profileImgContainer}>
-                        <Image source={pic} style={styles.profileImg} />
-                        
-                </TouchableHighlight>
-            
+                        <Image
+                        style={{ height: 100, width: 100, borderRadius: 50, }}
+                        source={fileUri ? { uri: fileUri } : // if clicked a new img
+                        require('../assets/img1.jpg')} //else show random
+                        />
+                        <TouchableOpacity style={styles.addPictureIcon} onPress={
+                        chooseImage
+                        }>
+                        <Icon name="camera" size={20} />
+                        </TouchableOpacity>
              </View>
         
              
@@ -412,4 +445,16 @@ const styles =StyleSheet.create({
         paddingLeft: 10,
         color: '#05375a',
     },
+    addPictureIcon: {
+        height: 30,
+        width: 30,
+        backgroundColor: 'white',
+        borderRadius: 50,
+        position: 'absolute',
+        left: 65,
+        top: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignItems: 'center',
+    }
 })

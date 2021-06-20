@@ -4,11 +4,11 @@ import { Modal, Portal, Text, Button } from 'react-native-paper';
 import moment from 'moment'
 
 const QuizModal = ({ paperId, navigation }) => {
-
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
     const [visible, setVisible] = React.useState(false);
     const [currentQuestion, setcurrentQuestion] = useState(1)
     const [totalmarks, setTotalmarks] = useState(0)
-
     const [currenttime, setCurrentTime] = useState(moment())
     let dur = moment.duration(moment(papers[i].endTime).diff(moment(currenttime)));
 
@@ -25,10 +25,29 @@ const QuizModal = ({ paperId, navigation }) => {
     }
 
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     console.log('hiii')
+    //     AppState.addEventListener("change", _handleAppStateChange);
+    
+    //     return () => {
+    //       AppState.removeEventListener("change", _handleAppStateChange);
+    //     };
+    //   }, []);
 
-    }, [])
+    
 
+    //   const _handleAppStateChange = (nextAppState) => {
+    //     if (
+    //       appState.current.match(/inactive|background/) &&
+    //       nextAppState === "active"
+    //     ) {
+    //       console.log("App has come to the foreground!");
+    //     }
+    
+    //     appState.current = nextAppState;
+    //     setAppStateVisible(appState.current);
+    //     console.log("AppState", appState.current);
+    //   };
     const hideModal = () => {
         setVisible(false)
         setcurrentQuestion(1)

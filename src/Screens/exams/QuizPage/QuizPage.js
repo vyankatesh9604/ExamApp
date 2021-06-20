@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Text, View, BackHandler, ScrollView } from 'react-native'
+import React, { useState, useEffect, useContext,useRef } from 'react'
+import { StyleSheet, Text, View, BackHandler, ScrollView,AppState } from 'react-native'
 import { Headline, Title, Button, ActivityIndicator } from 'react-native-paper';
 import moment from 'moment'
 import CountDown from 'react-native-countdown-component';
@@ -8,6 +8,9 @@ import url from '../../../url';
 import { userContext } from '../../../../App';
 
 const QuizPage = ({ route, navigation }) => {
+    
+    const appState = useRef(AppState.currentState);
+    const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
     let paperId = route.params.paperId
     const { state } = useContext(userContext)
@@ -36,6 +39,31 @@ const QuizPage = ({ route, navigation }) => {
             .catch((err) => { console.log(err) })
     }, [paperId])
 
+
+    useEffect(() => {
+        console.log('hiii')
+        AppState.addEventListener("change", _handleAppStateChange);
+    
+        return () => {
+          AppState.removeEventListener("change", _handleAppStateChange);
+        };
+      }, []);
+
+    
+
+      const _handleAppStateChange = (nextAppState) => {
+        if (
+          appState.current.match(/inactive|background/) &&
+          nextAppState === "active"
+        ) {
+          console.log("App has come to the foreground!");
+          alert('exam automatically submitted')
+        }
+    
+        appState.current = nextAppState;
+        setAppStateVisible(appState.current);
+        console.log("AppState", appState.current);
+      };
     const selectedOption = (index) => {
         if (!('selected' in paper.questions[currentQuestion - 1])) {
             let arr = paper.questions
@@ -47,6 +75,7 @@ const QuizPage = ({ route, navigation }) => {
             setPaper({ ...paper, questions: arr })
         } else {
             alert('You have already submitted answer')
+            TestSubmitted()
         }
     }
     const TestSubmitted = () => {
