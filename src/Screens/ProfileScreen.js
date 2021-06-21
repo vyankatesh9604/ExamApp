@@ -218,17 +218,34 @@ export default function ProfileScreen() {
     const [name, setName] = React.useState(state.name);
     const [cname, setCName] = React.useState(state.cname);
     const getUpdate = () =>{
-        axios.post(`http://192.168.43.247:5000/student/profileupdate`,{id:state._id,email:email,name:name,collegeName:cname}).then((res)=>{
+
+        const fileSource = {
+                uri:fileUri,
+            }
+
+            const data = new FormData()
+            data.append("file", fileSource)
+            data.append("upload_preset", "Examapp")
+            data.append("cloud_name", "dzjlte5ga")
+            console.log(fileSource)
+
+             axios.post('https://api.cloudinary.com/v1_1/dzjlte5ga/raw/upload', data).then(res=>{
+            console.log(res.data)
+            axios.post(`http://192.168.43.247:5000/student/profileupdate`,{id:state._id,email:email,name:name,collegeName:cname,url:fileUri}).then((res)=>{
             if(res.data.status === 'sucess'){
                 Alert.alert('updated sucessfully')
                 dispatch({type:'user',payload:res.data.user})
-            }
+            }                                                   
             else{
                 Alert.alert('something went wrong')
             }
-        }).catch(err=>{
+            }).catch(err=>{
             console.log(err)
+            })
+        }).catch(err=>{
+            console.log(res)
         })
+        
     }
     const chooseImage = () => {
         let options = {

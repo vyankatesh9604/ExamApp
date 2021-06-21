@@ -90,6 +90,13 @@ export function DrawerContent(props) {
                             label='Classes'
                             onPress={() => { props.navigation.navigate('Classes') }}
                         />
+                        <DrawerItem
+                            icon={({ color, size }) => (
+                                <Icon name='account-outline' color={color} size={size} />
+                            )}
+                            label='Feedback'
+                            onPress={() => { props.navigation.navigate('Feedback') }}
+                        />
                         {/* <DrawerItem
                             icon={({ color, size }) => (
                                 <Icon name='account-check-outline' color={color} size={size} />

@@ -10,6 +10,8 @@ import { Provider as PaperProvider, DarkTheme as PaperDarkTheme, DefaultTheme as
 import ProfileScreen from '../Screens/ProfileScreen';
 import QuizPage from '../Screens/exams/QuizPage/QuizPage'
 import ClassStackScreen from '../Navigation/StackNavigation/ClassStack'
+import FeedbackScreen from '../Screens/FeedbackScreen';
+import FeedStackScreen from './StackNavigation/FeedbackStack';
 
 const ProfileStack = createStackNavigator()
 
@@ -53,6 +55,7 @@ export default function MainNavigation() {
         <Drawer.Screen name="Profile" component={ProfileStackScreen} />
         <Drawer.Screen name="QuizPage" component={QuizPage} />
         <Drawer.Screen name="Classes" component={ClassStackScreen} />
+        <Drawer.Screen name="Feedback" component={FeedStackScreen} />
         {/* <Drawer.Screen name="Detail" component={DetailStackScreen} /> */}
       </Drawer.Navigator>
 
