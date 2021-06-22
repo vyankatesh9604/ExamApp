@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useEffect,useContext } from 'react'
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native'
 // import Header from '../Component/Header/TopHeader'
 import { Avatar, Button, Card, Title, Paragraph, Headline, IconButton } from 'react-native-paper';
@@ -6,13 +6,14 @@ import { userContext } from '../../../App'
 // import pic from '../../assets/smile_big.png'
 // import { View ,Dimensions} from "react-native";
 import { BarChart, PieChart } from "react-native-chart-kit";
-
+import axios from 'axios';
 
 
 
 export default function LeaderBoardScreen() {
   const { state } = useContext(userContext)
-  
+  const [students,setStudents] = useState([])
+
   // const data = {
   //   labels: ["Math", "Science"],
   //   datasets: [
@@ -51,22 +52,44 @@ export default function LeaderBoardScreen() {
   // ];
 
 
-var smile
+  var smile
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+        axios
+            .post(`${url}/class/getLeaderboard`, { cid: state.ActiveclassId })
+            .then((res) => {
+                // console.log(res.data)
+                setStudents(res.data.students)
+            })
+            .catch((err) => { console.log(err) })
+    })
+    return unsubscribe;
+}, [navigation])
 
 
   return (
-   
+
     <View style={styles.container}>
-      
+
       <View style={styles.header}>
-          <View style={{flexDirection:'row',marginHorizontal:30}}>
-            <View><Avatar.Text size={80} label="VG" style={{marginHorizontal:6}}/><Text style={{color:'white'}}>Vyankatesh</Text><Text style={{color:'white',fontSize:26,marginHorizontal:15}}>#2</Text></View>
-            <View ><Text style={{fontSize:30,marginHorizontal:28}}>👑</Text><Avatar.Text size={80} label="Ro" style={{marginHorizontal:6,elevation:30,}}/><Text style={{color:'white', marginHorizontal:25}}>Rohan</Text><Text style={{color:'white',fontSize:26,marginHorizontal:25}}>#1</Text></View>
-            <View><Avatar.Text size={80} label="Rg" style={{marginHorizontal:6}}/><Text style={{color:'white',marginHorizontal:15}}>Raghuveer</Text><Text style={{color:'white',fontSize:26,marginHorizontal:25}}>#3</Text></View>
-       </View>
+        <View style={{ marginHorizontal: 8 }}>
+          <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#2</Text>
+          <Avatar.Text size={75} label="RB" />
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>Rohan</Text>
+        </View>
+        {students.length > 0 && <View style={{ marginHorizontal: 8, marginVertical: 16 }}>
+          <Text style={{ fontSize: 32, textAlign: 'center', marginVertical: 6 }}>👑</Text>
+          <Avatar.Text size={100} label={'VG'} style={{ elevation: 30 }} />
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[0].student.name}</Text>
+        </View>}
+        <View style={{ marginHorizontal: 8 }}>
+          <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#3</Text>
+          <Avatar.Text size={75} label="RC" />
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>Raghuveer</Text>
+        </View>
       </View>
-      
+
 
 
       {/* <View style={{ flexDirection: 'row', position: 'absolute' }}>
@@ -82,9 +105,7 @@ var smile
         </Card>
       </View> */}
 
-      <View style={styles.footer}>
-        <ScrollView>
-          {/* <BarChart
+      {/* <BarChart
             data={data}
             width={screenWidth}
             height={220}
@@ -93,51 +114,33 @@ var smile
             style={{ marginTop: '20%' }}
             fromZero='true'
           /> */}
-        
-          {/* <Text style={{ textAlign: 'center', fontSize: 20 }}>Test Performance(%)</Text>
+
+      {/* <Text style={{ textAlign: 'center', fontSize: 20 }}>Test Performance(%)</Text>
           <PieChart
-            data={piedata}
-            width={screenWidth}
-            height={200}
-            accessor={"percentage"}
-            chartConfig={chartConfig}
-            backgroundColor={"transparent"}
-            absolute
+          data={piedata}
+          width={screenWidth}
+          height={200}
+          accessor={"percentage"}
+          chartConfig={chartConfig}
+          backgroundColor={"transparent"}
+          absolute
           />
-          <Text style={{ textAlign: 'center', fontSize: 20 }}>Subject Analysis(%)</Text> */}
-          <View>
-          <Card mode='outlined' style={styles.card}>
-              <Card.Content style={{flexDirection:'row'}}>
-                <Title>vyankatesh</Title>
-                <Title style={{marginLeft:'30%'}}>Rank #2</Title>
-              </Card.Content>
-          </Card>
-          <Card mode='outlined' style={styles.card1}>
-              <Card.Content style={{flexDirection:'row'}}>
-                <Title>vyankatesh</Title>
-                <Title style={{marginLeft:'30%'}}>Rank #3</Title>
-              </Card.Content>
-          </Card>
-          <Card mode='outlined' style={styles.card1}>
-              <Card.Content style={{flexDirection:'row'}}>
-                <Title>vyankatesh</Title>
-                <Title style={{marginLeft:'30%'}}>Rank #4</Title>
-              </Card.Content>
-          </Card>
-          <Card mode='outlined' style={styles.card1}>
-              <Card.Content style={{flexDirection:'row'}}>
-                <Title>vyankatesh</Title>
-                <Title style={{marginLeft:'30%'}}>Rank #5</Title>
-              </Card.Content>
-            </Card>
-            <Card mode='outlined' style={styles.card1}>
-              <Card.Content style={{flexDirection:'row'}}>
-                <Title>vyankatesh</Title>
-                <Title style={{marginLeft:'30%'}}>Rank #6</Title>
-              </Card.Content>
-            </Card>
-            </View>
-          </ScrollView>
+        <Text style={{ textAlign: 'center', fontSize: 20 }}>Subject Analysis(%)</Text> */}
+      <View style={styles.footer}>
+        <ScrollView>
+          {
+            [...Array(7).keys()].map((v, i) => {
+              return (
+                <Card mode='outlined' style={styles.card} key={i}>
+                  <Card.Content style={{ flexDirection: 'row' }}>
+                    <Title>vyankatesh</Title>
+                    <Title style={{ marginLeft: '30%' }}>Rank #{v + 4}</Title>
+                  </Card.Content>
+                </Card>
+              )
+            })
+          }
+        </ScrollView>
       </View>
 
     </View>
@@ -150,17 +153,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   header: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    paddingHorizontal: 10,
-    paddingBottom: 50,
-    backgroundColor:'#2e64e5',
-    borderBottomRightRadius:60,
-    borderBottomLeftRadius:60
+    // flex: 1,
+    justifyContent: 'space-around',
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    // paddingBottom: 50,
+    backgroundColor: '#2e64e5',
+    borderBottomRightRadius: 50,
+    borderBottomLeftRadius: 50,
+    flexDirection: 'row',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+    elevation: 11,
   },
   footer: {
     flex: 2,
-    paddingVertical: 30
+    paddingVertical: 8
   },
   headerText: {
     color: 'white',
@@ -173,25 +186,13 @@ const styles = StyleSheet.create({
   },
   card: {
     marginVertical: 8,
-    marginHorizontal: 16,
+    marginHorizontal: 12,
+    marginTop: '1%',
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
-    borderTopLeftRadius: 0,
-    marginTop:'1%',
-    borderTopLeftRadius:20,
-    backgroundColor:'#fff',
     elevation: 4,
   },
-  card1: {
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderTopLeftRadius: 0,
-    marginTop:'3%',
-    borderTopLeftRadius:20,
-    elevation: 4,
-  }
 })
