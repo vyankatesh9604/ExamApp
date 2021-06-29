@@ -219,22 +219,22 @@ export default function ProfileScreen() {
     const [cname, setCName] = React.useState(state.cname);
     const getUpdate = () =>{
 
-        const fileSource = {
-                uri:fileUri,
-            }
+        // const fileSource = {
+        //         uri:fileUri,
+        //     }
 
-            const data = new FormData()
-            data.append("file", fileSource)
-            data.append("upload_preset", "Examapp")
-            data.append("cloud_name", "dzjlte5ga")
-            console.log(fileSource)
+        //     const data = new FormData()
+        //     data.append("file", fileSource)
+        //     data.append("upload_preset", "Examapp")
+        //     data.append("cloud_name", "dzjlte5ga")
+        //     console.log(fileUri)
 
-             axios.post('https://api.cloudinary.com/v1_1/dzjlte5ga/raw/upload', data).then(res=>{
-            console.log(res.data)
+        //     axios.post('https://api.cloudinary.com/v1_1/dzjlte5ga/raw/upload', fileUri).then(res=>{
+        //         console.log(res.data)
             axios.post(`http://192.168.43.247:5000/student/profileupdate`,{id:state._id,email:email,name:name,collegeName:cname,url:fileUri}).then((res)=>{
             if(res.data.status === 'sucess'){
                 Alert.alert('updated sucessfully')
-                dispatch({type:'user',payload:res.data.user})
+                dispatch({type:'user',payload:{...res.data.user,ActiveclassId:state.ActiveclassId}})
             }                                                   
             else{
                 Alert.alert('something went wrong')
@@ -242,9 +242,9 @@ export default function ProfileScreen() {
             }).catch(err=>{
             console.log(err)
             })
-        }).catch(err=>{
-            console.log(res)
-        })
+        // }).catch(err=>{
+        //     console.log(res)
+        // })
         
     }
     const chooseImage = () => {
@@ -256,7 +256,7 @@ export default function ProfileScreen() {
         skipBackup: true,
         path: 'images',
         },
-        };
+    };
     launchImageLibrary(options, (response) => {
         console.log('Response = ', response);
         if (response.didCancel) {
@@ -320,7 +320,7 @@ export default function ProfileScreen() {
                         <Image
                         style={{ height: 100, width: 100, borderRadius: 50, }}
                         source={fileUri ? { uri: fileUri } : // if clicked a new img
-                        require('../assets/img1.jpg')} //else show random
+                        require('../assets/t1.jpg')} //else show random
                         />
                         <TouchableOpacity style={styles.addPictureIcon} onPress={
                         chooseImage

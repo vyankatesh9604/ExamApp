@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
     DrawerContentScrollView,
@@ -24,7 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userContext } from '../../App'
 export function DrawerContent(props) {
 
-
+    const {state} =useContext(userContext)
     // const paperTheme = useTheme()
     const getLogout = () => {
         AsyncStorage
@@ -49,7 +49,7 @@ export function DrawerContent(props) {
                                 />
                             </TouchableOpacity>
                             <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                                <Title style={styles.title}>Vyankatesh G</Title>
+                                <Title style={styles.title}>{state.name}</Title>
                                 <Caption style={styles.caption} onPress={() => { props.navigation.navigate('Profile') }}><Ion name='edit' style={{ marginHorizontal: 4 }} /><Text style={{ color: 'blue', fontSize: 14 }} > Edit Pofile</Text></Caption>
                             </View>
                         </View>

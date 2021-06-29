@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext,useRef } from 'react'
-import { StyleSheet, Text, View, BackHandler, ScrollView,AppState } from 'react-native'
+import { StyleSheet, Text, View, BackHandler, ScrollView,AppState,Alert } from 'react-native'
 import { Headline, Title, Button, ActivityIndicator } from 'react-native-paper';
 import moment from 'moment'
 import CountDown from 'react-native-countdown-component';
@@ -20,7 +20,8 @@ const QuizPage = ({ route, navigation }) => {
     // const [questions, setQuestions] = useState(paper.questions)
     const [currentQuestion, setcurrentQuestion] = useState(1)
     const [totalmarks, setTotalmarks] = useState(0)
-
+    let c=0
+    
     // let dur = moment.duration(moment(paper?.endTime).diff(moment(currenttime)));
 
     useEffect(() => {
@@ -41,7 +42,6 @@ const QuizPage = ({ route, navigation }) => {
 
 
     useEffect(() => {
-        console.log('hiii')
         AppState.addEventListener("change", _handleAppStateChange);
     
         return () => {
@@ -57,12 +57,22 @@ const QuizPage = ({ route, navigation }) => {
           nextAppState === "active"
         ) {
           console.log("App has come to the foreground!");
-          alert('exam automatically submitted')
+          
+          c=c+1
+          
         }
-    
+        console.log(c)
+        if(c>5){
+            alert('exam submited automatically')
+            TestSubmitted()
+        }else{
+            Alert.alert(`Warning ${c}/5`,"please don't minimize app during test your test will be auto submitted")
+        }
+                
         appState.current = nextAppState;
         setAppStateVisible(appState.current);
         console.log("AppState", appState.current);
+        
       };
     const selectedOption = (index) => {
         if (!('selected' in paper.questions[currentQuestion - 1])) {

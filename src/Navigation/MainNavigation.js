@@ -53,7 +53,7 @@ export default function MainNavigation() {
         <Drawer.Screen name="HomeDrawer" component={TabNavigation} />
         {/* <Drawer.Screen name="Assign" component={AssignmentStackScreen} /> */}
         <Drawer.Screen name="Profile" component={ProfileStackScreen} />
-        <Drawer.Screen name="QuizPage" component={QuizPage} />
+        {/* <Drawer.Screen name="QuizPage" component={QuizPage} /> */}
         <Drawer.Screen name="Classes" component={ClassStackScreen} />
         <Drawer.Screen name="Feedback" component={FeedStackScreen} />
         {/* <Drawer.Screen name="Detail" component={DetailStackScreen} /> */}

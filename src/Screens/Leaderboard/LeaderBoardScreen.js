@@ -1,4 +1,4 @@
-import React, { useEffect,useContext } from 'react'
+import React, { useEffect,useContext,useState } from 'react'
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native'
 // import Header from '../Component/Header/TopHeader'
 import { Avatar, Button, Card, Title, Paragraph, Headline, IconButton } from 'react-native-paper';
@@ -7,10 +7,10 @@ import { userContext } from '../../../App'
 // import { View ,Dimensions} from "react-native";
 import { BarChart, PieChart } from "react-native-chart-kit";
 import axios from 'axios';
+import url from '../../url';
 
 
-
-export default function LeaderBoardScreen() {
+export default function LeaderBoardScreen({navigation}) {
   const { state } = useContext(userContext)
   const [students,setStudents] = useState([])
 
@@ -68,15 +68,17 @@ export default function LeaderBoardScreen() {
 }, [navigation])
 
 
+
   return (
 
     <View style={styles.container}>
 
-      <View style={styles.header}>
+      { students.length > 3 && 
+        <View style={styles.header}>
         <View style={{ marginHorizontal: 8 }}>
           <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#2</Text>
           <Avatar.Text size={75} label="RB" />
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>Rohan</Text>
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[1].student.name}</Text>
         </View>
         {students.length > 0 && <View style={{ marginHorizontal: 8, marginVertical: 16 }}>
           <Text style={{ fontSize: 32, textAlign: 'center', marginVertical: 6 }}>👑</Text>
@@ -86,9 +88,9 @@ export default function LeaderBoardScreen() {
         <View style={{ marginHorizontal: 8 }}>
           <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#3</Text>
           <Avatar.Text size={75} label="RC" />
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>Raghuveer</Text>
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[2].student.name}r</Text>
         </View>
-      </View>
+      </View>}
 
 
 
@@ -129,12 +131,22 @@ export default function LeaderBoardScreen() {
       <View style={styles.footer}>
         <ScrollView>
           {
-            [...Array(7).keys()].map((v, i) => {
+            students.length < 3 ? students.map((v, i) => {
               return (
                 <Card mode='outlined' style={styles.card} key={i}>
                   <Card.Content style={{ flexDirection: 'row' }}>
-                    <Title>vyankatesh</Title>
-                    <Title style={{ marginLeft: '30%' }}>Rank #{v + 4}</Title>
+                    <Title>{v.student.name}</Title>
+                    <Title style={{ marginLeft: 'auto' }}>Rank #{i + 1}</Title>
+                  </Card.Content>
+                </Card>
+              )
+            }):
+              students.slice(3).map((v, i) => {
+              return (
+                <Card mode='outlined' style={styles.card} key={i}>
+                  <Card.Content style={{ flexDirection: 'row' }}>
+                    <Title>{v.student.name}</Title>
+                    <Title style={{ marginLeft: 'auto' }}>Rank #{i + 4}</Title>
                   </Card.Content>
                 </Card>
               )

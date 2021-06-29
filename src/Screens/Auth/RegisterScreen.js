@@ -67,14 +67,14 @@ export default function RegisterScreen({ navigation }) {
             return
         }
         if(!isNaN(name)){
-            return alert('please enter character')
+             alert('please enter character')
+             return
         }
-        if(name === ''){
-            return alert('please enter your name')
+        if(!isNaN(collegename)){
+             alert('please enter character')
+             return
         }
-        if(name === ''){
-            return alert('please enter your college name')
-        }
+        
         axios.post(`${url}/student/signup`, { name: name, email: data.email, password: data.password, collegeName: collegename })
             .then((res) => {
                 if (res.data.status === "fail") {

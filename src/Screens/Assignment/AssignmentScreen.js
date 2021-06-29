@@ -12,8 +12,9 @@ const AssignmentScreen = ({ navigation }) => {
 
     const { state, dispatch } = useContext(userContext)
     const [assignments, setAssignments] = useState([])
-
+    
     useEffect(() => {
+        console.log(state.ActiveclassId)
         const unsubscribe = navigation.addListener('focus', () => {
             axios
                 .post(`${url}/assignment/getAssignments`, { classId: state.ActiveclassId })
@@ -55,10 +56,10 @@ const AssignmentScreen = ({ navigation }) => {
                                                         <Text style={{ fontSize: 16 }}>Total Marks :</Text>
                                                         <Text style={{ fontSize: 16 }}> {assignment.totalMarks}</Text>
                                                     </View>
-                                                    <View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
+                                                   { assignment.submissions.length > 1 && assignment.submissions.filter((s)=>s.student === state._id).length > 1 &&<View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
                                                         <Text style={{ fontSize: 16 }}>Obtained Marks :</Text>
                                                         <Text style={{ fontSize: 16 }}> {JSON.stringify(assignment.submissions.filter((s)=>s.student === state._id)[0].obtainedMarks)}</Text>
-                                                    </View>
+                                                    </View>}
                                                 </View>
                                                 {/* <Text style={{ fontSize: 18, fontWeight: '800' }}>Instructions</Text> */}
                                                 <Paragraph>*Assignment should be submitted before due date {'\n'}*No submissions will be accpeted after due date</Paragraph>
