@@ -45,6 +45,7 @@ const AssignmentSubmit = ({ navigation, route }) => {
                             student: state._id,
                             document: res.data.secure_url
                         }).then((res) => {
+                            console.log(res.data)
                             if (res.data.status === 'sucess') {
                                 setAssignment(res.data.assignment)
                             }

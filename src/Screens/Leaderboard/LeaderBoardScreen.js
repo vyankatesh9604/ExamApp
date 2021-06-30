@@ -1,4 +1,4 @@
-import React, { useEffect,useContext,useState } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native'
 // import Header from '../Component/Header/TopHeader'
 import { Avatar, Button, Card, Title, Paragraph, Headline, IconButton } from 'react-native-paper';
@@ -10,9 +10,9 @@ import axios from 'axios';
 import url from '../../url';
 
 
-export default function LeaderBoardScreen({navigation}) {
+export default function LeaderBoardScreen({ navigation }) {
   const { state } = useContext(userContext)
-  const [students,setStudents] = useState([])
+  const [students, setStudents] = useState([])
 
   // const data = {
   //   labels: ["Math", "Science"],
@@ -56,41 +56,46 @@ export default function LeaderBoardScreen({navigation}) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-        axios
-            .post(`${url}/class/getLeaderboard`, { cid: state.ActiveclassId })
-            .then((res) => {
-                // console.log(res.data)
-                setStudents(res.data.students)
-            })
-            .catch((err) => { console.log(err) })
+      axios
+        .post(`${url}/class/getLeaderboard`, { cid: state.ActiveclassId })
+        .then((res) => {
+          console.log(res.data.students)
+          setStudents(res.data.students)
+        })
+        .catch((err) => { console.log(err) })
     })
     return unsubscribe;
-}, [navigation])
+  }, [navigation])
 
 
 
   return (
 
     <View style={styles.container}>
-
-      { students.length > 3 && 
+      {/* {console.log(students)} */}
+      {
+        students.length === 0 && <View>
+          <Text style={{ textAlign: 'center', marginTop: 100, fontSize: 20 }}>No submissions yet</Text>
+        </View>
+      }
+      {students.length > 3 &&
         <View style={styles.header}>
-        <View style={{ marginHorizontal: 8 }}>
-          <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#2</Text>
-          <Avatar.Text size={75} label="RB" />
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[1].student.name}</Text>
-        </View>
-        {students.length > 0 && <View style={{ marginHorizontal: 8, marginVertical: 16 }}>
-          <Text style={{ fontSize: 32, textAlign: 'center', marginVertical: 6 }}>👑</Text>
-          <Avatar.Text size={100} label={'VG'} style={{ elevation: 30 }} />
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[0].student.name}</Text>
+          <View style={{ marginHorizontal: 8 }}>
+            <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#2</Text>
+            <Avatar.Text size={75} label="RB" />
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[1].student.name}</Text>
+          </View>
+          {students.length > 0 && <View style={{ marginHorizontal: 8, marginVertical: 16 }}>
+            <Text style={{ fontSize: 32, textAlign: 'center', marginVertical: 6 }}>👑</Text>
+            <Avatar.Text size={100} label={'VG'} style={{ elevation: 30 }} />
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[0].student.name}</Text>
+          </View>}
+          <View style={{ marginHorizontal: 8 }}>
+            <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#3</Text>
+            <Avatar.Text size={75} label="RC" />
+            <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[2].student.name}r</Text>
+          </View>
         </View>}
-        <View style={{ marginHorizontal: 8 }}>
-          <Text style={{ color: 'white', fontSize: 26, textAlign: 'center', marginVertical: 6 }}>#3</Text>
-          <Avatar.Text size={75} label="RC" />
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 16, marginVertical: 6 }}>{students[2].student.name}r</Text>
-        </View>
-      </View>}
 
 
 
@@ -140,17 +145,17 @@ export default function LeaderBoardScreen({navigation}) {
                   </Card.Content>
                 </Card>
               )
-            }):
+            }) :
               students.slice(3).map((v, i) => {
-              return (
-                <Card mode='outlined' style={styles.card} key={i}>
-                  <Card.Content style={{ flexDirection: 'row' }}>
-                    <Title>{v.student.name}</Title>
-                    <Title style={{ marginLeft: 'auto' }}>Rank #{i + 4}</Title>
-                  </Card.Content>
-                </Card>
-              )
-            })
+                return (
+                  <Card mode='outlined' style={styles.card} key={i}>
+                    <Card.Content style={{ flexDirection: 'row' }}>
+                      <Title>{v.student.name}</Title>
+                      <Title style={{ marginLeft: 'auto' }}>Rank #{i + 4}</Title>
+                    </Card.Content>
+                  </Card>
+                )
+              })
           }
         </ScrollView>
       </View>
