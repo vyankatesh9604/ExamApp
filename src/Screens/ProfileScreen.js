@@ -28,12 +28,12 @@
 //       color: '#05375a',
 //       fontSize: 18
 //   },
- 
+
 //   textInput: {
 //       flex: 1,
 //       marginTop: Platform.OS === 'ios' ? 0 : -12,
 //       paddingLeft: 10,
-      
+
 //   },
 //   action: {
 //     flexDirection: 'row',
@@ -42,7 +42,7 @@
 //     borderBottomColor: '#f2f2f2',
 //     paddingBottom: 5
 // },
-  
+
 // });
 
 
@@ -91,9 +91,9 @@
 //                                      color="#000"
 //                                      borderBottomColor="#fff"
 //                                      pointerEvents="box-none"
-                                   
-                          
-            
+
+
+
 //                      />
 //                 </View>
 //                 <Text  style={styles.text_footer}>Email</Text>
@@ -112,9 +112,9 @@
 //                                      color="#000"
 //                                      borderBottomColor="#fff"
 
-                                   
-                          
-            
+
+
+
 //                      />
 //                 </View>
 //                 <View style={styles.button}>
@@ -188,7 +188,7 @@
 //         justifyContent: 'center',
 //         alignItems: 'center',
 //         borderRadius: 10,
-        
+
 //     },
 //     button: {
 //         alignItems: 'center',
@@ -197,27 +197,27 @@
 
 // })
 
-import React,{ useState,useContext } from 'react'
-import { View,Text, StyleSheet, TouchableOpacity, Alert,TouchableHighlight,Image,TextInput,Dimensions } from 'react-native'
+import React, { useState, useContext } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Alert, TouchableHighlight, Image, TextInput, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/Fontisto';
 import LinearGradient from 'react-native-linear-gradient';
 import Ion from 'react-native-vector-icons/Ionicons';
-import {userContext} from '../../App'
+import { userContext } from '../../App'
 import axios from 'axios'
-import {Avatar} from 'react-native-paper'
+import { Avatar } from 'react-native-paper'
 import pic from '../assets/smile_big.png'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-const {height} = Dimensions.get("window")
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker'
+const { height } = Dimensions.get("window")
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import url from '../url';
 
 export default function ProfileScreen() {
-    const {state,dispatch} = useContext(userContext)
+    const { state, dispatch } = useContext(userContext)
     const [fileUri, SetFileuri] = useState()
     const [email, setEmail] = React.useState(state.email);
     const [name, setName] = React.useState(state.name);
     const [cname, setCName] = React.useState(state.cname);
-    const getUpdate = () =>{
+    const getUpdate = () => {
 
         // const fileSource = {
         //         uri:fileUri,
@@ -231,49 +231,49 @@ export default function ProfileScreen() {
 
         //     axios.post('https://api.cloudinary.com/v1_1/dzjlte5ga/raw/upload', fileUri).then(res=>{
         //         console.log(res.data)
-            axios.post(`http://192.168.43.247:5000/student/profileupdate`,{id:state._id,email:email,name:name,collegeName:cname,url:fileUri}).then((res)=>{
-            if(res.data.status === 'sucess'){
+        axios.post(`http://192.168.43.247:5000/student/profileupdate`, { id: state._id, email: email, name: name, collegeName: cname, url: fileUri }).then((res) => {
+            if (res.data.status === 'sucess') {
                 Alert.alert('updated sucessfully')
-                dispatch({type:'user',payload:{...res.data.user,ActiveclassId:state.ActiveclassId}})
-            }                                                   
-            else{
+                dispatch({ type: 'user', payload: { ...res.data.user, ActiveclassId: state.ActiveclassId } })
+            }
+            else {
                 Alert.alert('something went wrong')
             }
-            }).catch(err=>{
+        }).catch(err => {
             console.log(err)
-            })
+        })
         // }).catch(err=>{
         //     console.log(res)
         // })
-        
+
     }
     const chooseImage = () => {
         let options = {
-        title: 'Select Avatar', 
-        cameraType: 'front',
-        mediaType: 'photo' ,
-        storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        },
-    };
-    launchImageLibrary(options, (response) => {
-        console.log('Response = ', response);
-        if (response.didCancel) {
-        console.log('User cancelled image picker');
-        } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-        } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-        alert(response.customButton);
-        } else {
-        SetFileuri(response.uri) //update state to update Image
-        }
+            title: 'Select Avatar',
+            cameraType: 'front',
+            mediaType: 'photo',
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        launchImageLibrary(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                alert(response.customButton);
+            } else {
+                SetFileuri(response.uri) //update state to update Image
+            }
         });
     }
     return (
         <View style={styles.container}>
-           {/* <View>
+            {/* <View>
                <Text style={{paddingLeft:'40%',fontSize:20,marginVertical:4,paddingTop:'15%'}}>Email</Text>
             <TextInput
                 mode='outlined' 
@@ -313,87 +313,87 @@ export default function ProfileScreen() {
                                         }}>Save</Text>
             </LinearGradient>
            </TouchableOpacity> */}
-              <View style={styles.header}>
-                
-              </View>
-             <View style={{position:'absolute',marginLeft:'33%',marginVertical:6}}>
-                        <Image
-                        style={{ height: 100, width: 100, borderRadius: 50, }}
-                        source={fileUri ? { uri: fileUri } : // if clicked a new img
-                        require('../assets/t1.jpg')} //else show random
-                        />
-                        <TouchableOpacity style={styles.addPictureIcon} onPress={
-                        chooseImage
-                        }>
-                        <Icon name="camera" size={20} />
-                        </TouchableOpacity>
-             </View>
-        
-             
-              <View style={styles.footer}>
-                    <Text style={[styles.text_footer,{marginVertical:12}]}>Email</Text>
-                        <View style={styles.action}>
-                            <Icon
-                                name="email"
-                                color="#05375a"
-                                size={20}
-                            />
-                            <TextInput
-                                placeholder="Your Email"
-                                style={styles.textInput}
-                                autoCapitalize="none"
-                                value={email}
-                                onChangeText={(email) => setEmail(email)}
-                            />
-                        </View>
-                        <Text style={[styles.text_footer,{marginTop:8}]}>Name</Text>
-                            <View style={styles.action}>
-                                <Ion 
-                                    name="md-person"
-                                    color="#05375a"
-                                    size={20}
-                                />
-                                <TextInput 
-                                    placeholder="Your Full Name"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    value={name}
-                                    onChangeText={(name)=>setName(name)}
-            
-                                />
-                            </View>
-                            <Text style={[styles.text_footer,{marginVertical:20}]}> college Name</Text>
-                            <View style={styles.action}>
-                                <MaterialCommunityIcons
-                                    name="school"
-                                    color="#05375a"
-                                    size={20}
-                                />
-                                <TextInput 
-                                    placeholder="Your Full Name"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    value={cname}
-                                    onChangeText={(cname)=>setCName(cname)}
-            
-                                />
-                            </View>
-                            <TouchableOpacity style={styles.signIn} onPress={()=>getUpdate()}>
-                                <LinearGradient
-                                        colors={['#2e64e5','#2e64e5']}
-                                        style={styles.signIn}
-                                    >
-                                        <Text style={styles.textSign,{
-                                                                        color:'#fff'
-                                                                }}>Save</Text>
-                                    </LinearGradient>
-                            </TouchableOpacity>
+            <View style={styles.header}>
+
             </View>
-        
+            <View style={{ position: 'absolute', marginLeft: '33%', marginVertical: 6 }}>
+                <Image
+                    style={{ height: 100, width: 100, borderRadius: 50, }}
+                    source={fileUri ? { uri: fileUri } : // if clicked a new img
+                        require('../assets/t1.jpg')} //else show random
+                />
+                <TouchableOpacity style={styles.addPictureIcon} onPress={
+                    chooseImage
+                }>
+                    <Icon name="camera" size={20} />
+                </TouchableOpacity>
+            </View>
+
+
+            <View style={styles.footer}>
+                <Text style={[styles.text_footer, { marginVertical: 12 }]}>Email</Text>
+                <View style={styles.action}>
+                    <Icon
+                        name="email"
+                        color="#05375a"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Email"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        value={email}
+                        onChangeText={(email) => setEmail(email)}
+                    />
+                </View>
+                <Text style={[styles.text_footer, { marginTop: 8 }]}>Name</Text>
+                <View style={styles.action}>
+                    <Ion
+                        name="md-person"
+                        color="#05375a"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Full Name"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        value={name}
+                        onChangeText={(name) => setName(name)}
+
+                    />
+                </View>
+                <Text style={[styles.text_footer, { marginVertical: 20 }]}> college Name</Text>
+                <View style={styles.action}>
+                    <MaterialCommunityIcons
+                        name="school"
+                        color="#05375a"
+                        size={20}
+                    />
+                    <TextInput
+                        placeholder="Your Full Name"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        value={cname}
+                        onChangeText={(cname) => setCName(cname)}
+
+                    />
+                </View>
+                <TouchableOpacity style={styles.signIn} onPress={() => getUpdate()}>
+                    <LinearGradient
+                        colors={['#2e64e5', '#2e64e5']}
+                        style={styles.signIn}
+                    >
+                        <Text style={styles.textSign, {
+                            color: '#fff'
+                        }}>Save</Text>
+                    </LinearGradient>
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 }
-const styles =StyleSheet.create({
+const styles = StyleSheet.create({
     // input:{
     //     marginVertical:8
     // },
@@ -403,8 +403,8 @@ const styles =StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
-        marginVertical:50,
-        
+        marginVertical: 50,
+
     },
     // textSign: {
     //     fontSize:30,
@@ -415,7 +415,7 @@ const styles =StyleSheet.create({
         backgroundColor: '#2e64e5'
     },
     header: {
-        flex:1,
+        flex: 1,
         justifyContent: 'flex-end',
         paddingHorizontal: 10,
         paddingBottom: 50,
@@ -431,23 +431,23 @@ const styles =StyleSheet.create({
         height: 80,
         width: 80,
         borderRadius: 40,
-       
-       
-      },
-      profileImg: {
+
+
+    },
+    profileImg: {
         height: 100,
         width: 100,
         borderRadius: 150 / 2,
         overflow: "hidden",
         borderWidth: 3,
         borderColor: "black",
-       
-        
-      },
+
+
+    },
     text_footer: {
         color: '#05375a',
         fontSize: 18,
-        marginVertical:4
+        marginVertical: 4
     },
     action: {
         flexDirection: 'row',

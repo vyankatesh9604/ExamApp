@@ -32,14 +32,14 @@ export default function ClassScreen({ navigation }) {
     <>
       {
         studentclass.map((oneclass, index) => {
-          return <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 8,borderBottomRightRadius:15,borderBottomLeftRadius:15 }} key={index}>
+          return <Card mode='outlined' style={{ marginVertical: 8, marginHorizontal: 8, borderBottomRightRadius: 15, borderBottomLeftRadius: 15 }} key={index}>
             <Card.Title title={oneclass.name} />
             <Card.Content>
-              <Title>created by {oneclass.teacher.name}</Title> 
+              <Title>created by {oneclass.teacher.name}</Title>
             </Card.Content>
             <Card.Actions>
               <Button
-                style={{ backgroundColor: '#009387',marginLeft:'70%',marginVertical:8 }}
+                style={{ backgroundColor: '#009387', marginLeft: '70%', marginVertical: 8 }}
                 onPress={() => { openClass(oneclass._id) }}>
                 <Text style={{ color: 'white' }}>View</Text>
               </Button>

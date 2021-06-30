@@ -25,7 +25,7 @@ const PastExams = ({ navigation }) => {
                 })
         })
         return unsubscribe;
-    }, [navigation])
+    }, [navigation, state.ActiveclassId])
 
     return (
         <>

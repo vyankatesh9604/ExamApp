@@ -25,7 +25,7 @@ const CurrentExams = ({ navigation }) => {
                 })
         })
         return unsubscribe;
-    }, [navigation])
+    }, [navigation, state.ActiveclassId])
 
     useEffect(() => {
         const interval = setInterval(() => setCurrentTime(moment()), 5000)

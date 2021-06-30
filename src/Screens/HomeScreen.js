@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect  } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 //  import {View,Text,StatusBar} from 'react-native'
 // // import Header from '../Component/Header/TopHeader'
 // import {useTheme} from '@react-navigation/native'
@@ -13,21 +13,25 @@ export default function HomeScreen({ navigation }) {
   const { state, dispatch } = useContext(userContext)
   const [notifications, setNotifications] = useState([])
 
-  const getnotification = () =>{
-    axios.post(`${url}/notification/getAllnotification`,{classId:state.ActiveclassId}).then(res=>{
+  const getnotification = () => {
+    axios.post(`${url}/notification/getAllnotification`, { classId: state.ActiveclassId }).then(res => {
       setNotifications(res.data.notification)
     })
   }
 
-  useEffect(()=>{
-    getnotification()
-  })
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getnotification()
+
+    })
+    return unsubscribe;
+  }, [navigation, state.ActiveclassId])
   return (
     <View style={{ flex: 1, backgroundColor: '#ddd' }}>
       {
         <ScrollView>
           {
-            notifications.map((singlenotification,index) => <Card mode='outlined' style={styles.card} key={index}>
+            notifications.map((singlenotification, index) => <Card mode='outlined' style={styles.card} key={index}>
               <Card.Content>
                 <Title>{singlenotification.title}</Title>
                 <Paragraph>{singlenotification.notification}</Paragraph>

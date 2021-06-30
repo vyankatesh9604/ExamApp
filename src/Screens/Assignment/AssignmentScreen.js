@@ -12,7 +12,7 @@ const AssignmentScreen = ({ navigation }) => {
 
     const { state, dispatch } = useContext(userContext)
     const [assignments, setAssignments] = useState([])
-    
+
     useEffect(() => {
         console.log(state.ActiveclassId)
         const unsubscribe = navigation.addListener('focus', () => {
@@ -25,7 +25,7 @@ const AssignmentScreen = ({ navigation }) => {
                 .catch((err) => { console.log(err) })
         })
         return unsubscribe;
-    }, [navigation])
+    }, [navigation, state.ActiveclassId])
 
     return (
         <View>
@@ -56,9 +56,9 @@ const AssignmentScreen = ({ navigation }) => {
                                                         <Text style={{ fontSize: 16 }}>Total Marks :</Text>
                                                         <Text style={{ fontSize: 16 }}> {assignment.totalMarks}</Text>
                                                     </View>
-                                                   { assignment.submissions.length > 1 && assignment.submissions.filter((s)=>s.student === state._id).length > 1 &&<View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
+                                                    {assignment.submissions.length > 1 && assignment.submissions.filter((s) => s.student === state._id).length > 1 && <View style={{ flexDirection: 'row', marginVertical: 2, marginLeft: 8 }}>
                                                         <Text style={{ fontSize: 16 }}>Obtained Marks :</Text>
-                                                        <Text style={{ fontSize: 16 }}> {JSON.stringify(assignment.submissions.filter((s)=>s.student === state._id)[0].obtainedMarks)}</Text>
+                                                        <Text style={{ fontSize: 16 }}> {JSON.stringify(assignment.submissions.filter((s) => s.student === state._id)[0].obtainedMarks)}</Text>
                                                     </View>}
                                                 </View>
                                                 {/* <Text style={{ fontSize: 18, fontWeight: '800' }}>Instructions</Text> */}

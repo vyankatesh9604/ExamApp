@@ -59,13 +59,12 @@ export default function LeaderBoardScreen({ navigation }) {
       axios
         .post(`${url}/class/getLeaderboard`, { cid: state.ActiveclassId })
         .then((res) => {
-          console.log(res.data.students)
           setStudents(res.data.students)
         })
         .catch((err) => { console.log(err) })
     })
     return unsubscribe;
-  }, [navigation])
+  }, [navigation, state.ActiveclassId])
 
 
 
